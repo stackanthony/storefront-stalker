@@ -1,0 +1,24 @@
+{
+  "name": "amztools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/copbrick/amztools.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/copbrick/amztools/issues"
+  },
+  "homepage": "https://github.com/copbrick/amztools#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "install": "^0.13.0",
+    "signale": "^1.4.0"
+  }
+}
