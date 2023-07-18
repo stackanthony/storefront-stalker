@@ -23,6 +23,7 @@
     "discord.js": "^14.11.0",
     "fs": "^0.0.1-security",
     "install": "^0.13.0",
+    "sequelize": "^6.32.1",
     "signale": "^1.4.0"
   }
 }
