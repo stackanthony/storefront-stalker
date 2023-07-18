@@ -12,13 +12,26 @@ const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 const main = async () => {
     // let sellerASINS = amazonParser.getSellerASINS();
     // sellerASINS.forEach((sellerASIN) => signale.info(sellerASIN));
-    let res = await axios.get(queryURL, {
+    // let res = await axios.get(queryURL, {
+    //     headers: {
+    //         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+    //     }
+    // });
+
+    // rewrite the axios request with fetch instead
+    let res = await fetch(queryURL, {
         headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
         }
     });
 
-    const $ = cheerio.load(res.data);
+    // convert the response to text
+    res = await res.text();
+    console.log("typeof res: ", typeof res);
+
+    console.log("res: ", res);
+
+    const $ = cheerio.load(res);
 
     // const productTitles = $('div.s-card-container div.a-section div.sg-col-inner div.a-section.a-spacing-none.puis-padding-right-small.s-title-instructions-style h2.a-size-mini a.a-link-normal').text().trim().split(',');
     // signale.info(productTitles);
