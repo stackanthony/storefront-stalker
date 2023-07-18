@@ -26,12 +26,8 @@ const main = async () => {
     });
 
     // convert the response to text
-    res = await res.text();
-    console.log("typeof res: ", typeof res);
-
-    console.log("res: ", res);
-
-    const $ = cheerio.load(res);
+    let html = await res.text();
+    const $ = cheerio.load(html);
 
     // const productTitles = $('div.s-card-container div.a-section div.sg-col-inner div.a-section.a-spacing-none.puis-padding-right-small.s-title-instructions-style h2.a-size-mini a.a-link-normal').text().trim().split(',');
     // signale.info(productTitles);
