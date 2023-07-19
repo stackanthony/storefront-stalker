@@ -3,53 +3,64 @@ const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
 
 class User extends Model {
-	static associate() { }
+	static associate() {}
 
 	async findUser(discordUserID) {
 		try {
-			const user = await User.findOne({ where: { discordUserID: discordUserID } });
+			const user = await User.findOne({
+				where: { discordUserID: discordUserID },
+			});
 
-			if (user) {
-				return user;
-			} else {
-				throw new Error("Couldn't Find User");
-			}
+			return !!user; // Return true if user is found, false otherwise
 		} catch (error) {
 			signale.error("Couldn't Complete Find Request: ", error);
-			throw error;
+			return false; // Return false in case of an error
 		}
 	}
 
 	async createUser(discordUserID) {
 		try {
-			const user = await User.create({ discordUserID: discordUserID });
+			await User.create({ discordUserID: discordUserID });
 
-			signale.success("User Created: ", user.discordUserID);
+			signale.success("User Created: ", discordUserID);
+			return true; // Return true to indicate success
 		} catch (error) {
 			signale.error("User DB Creation Error: ", error);
-			throw error;
+			return false; // Return false in case of an error
 		}
 	}
 
 	async removeUser(discordUserID) {
 		try {
 			const user = await this.findUser(discordUserID);
-			await user.destroy();
-			signale.complete("User Removed: ", user);
+			if (user) {
+				await user.destroy();
+				signale.complete("User Removed: ", user);
+				return true; // Return true to indicate success
+			} else {
+				signale.warn("User Not Found, No Action Taken.");
+				return false; // Return false when user is not found
+			}
 		} catch (error) {
 			signale.error("User Remove Error: ", error);
-			throw error;
+			return false; // Return false in case of an error
 		}
 	}
 
 	async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
-			user.discordWebhook = discordWebhook;
-			await user.save();
+			if (user) {
+				user.discordWebhook = discordWebhook;
+				await user.save();
+				return true; // Return true to indicate success
+			} else {
+				signale.warn("User Not Found, Webhook Not Set.");
+				return false; // Return false when user is not found
+			}
 		} catch (error) {
 			signale.error("Couldn't Set User Webhook. Ensure that user exists.");
-			throw error;
+			return false; // Return false in case of an error
 		}
 	}
 }
@@ -60,15 +71,15 @@ User.init(
 			type: DataTypes.BIGINT,
 			unique: true,
 			allowNull: false,
-			primaryKey: true
+			primaryKey: true,
 		},
 		discordWebhook: {
 			type: DataTypes.STRING,
 			unique: true,
-		}
+		},
 	},
 	{ paranoid: true, sequelize: db, modelName: "User" }
 );
-signale.success("User Model Initalized");
+signale.success("User Model Initialized");
 
 module.exports = User;
