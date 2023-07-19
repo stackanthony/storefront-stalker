@@ -13,11 +13,10 @@ class User extends Model {
 			if (user) {
 				return user; // Return true if user is found, false otherwise
 			} else {
-				throw new Error("User Not Found");
+				return false;
 			}
 		} catch (error) {
-			signale.error("Couldn't Complete Find Request: ", error);
-			return false; // Return false in case of an error
+			signale.error("Error in findUser: ", error);
 		}
 	}
 
@@ -57,14 +56,13 @@ class User extends Model {
 			if (user) {
 				user.discordWebhook = discordWebhook;
 				await user.save();
-				console.log("after save");
 				return true; // Return true to indicate success
 			} else {
 				signale.warn("User Not Found, Webhook Not Set.");
 				return false; // Return false when user is not found
 			}
 		} catch (error) {
-			signale.error("Couldn't Set User Webhook. Ensure that user exists.");
+			signale.error("Couldn't Set User Webhook: ", error)
 			return false; // Return false in case of an error
 		}
 	}
@@ -80,7 +78,7 @@ User.init(
 		},
 		discordWebhook: {
 			type: DataTypes.STRING,
-			unique: true,
+			unique: false,
 		},
 	},
 	{ paranoid: true, sequelize: db, modelName: "User" }
