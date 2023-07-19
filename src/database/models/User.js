@@ -50,9 +50,15 @@ class User extends Model {
 	async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
-			if (user) {
-				user.discordWebhook = discordWebhook;
+			console.log(user);
+			if (user === true) {
+				console.log("user found");
+				console.log("discordWebhook before assignment:", discordWebhook);
+				user.discordWebhook = discordWebhook.toString();
+				console.log(user.discordWebhook)
+				console.log("bef save");
 				await user.save();
+				console.log("after save");
 				return true; // Return true to indicate success
 			} else {
 				signale.warn("User Not Found, Webhook Not Set.");

@@ -2,41 +2,53 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { User } = require("../../database/models");
+const userInstance = new User();
+
+// Regular expression pattern for Discord webhook URL
+const webhookRegex = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("setwebhook")
-        .setDescription("Set Webhook to Receive Notifications to.")
-        .addStringOption((option) =>
-            option
-                .setName("webhook")
-                .setDescription("Discord Webhook. In order to create a webhook, refer to Discord guides.")
-                .setRequired(true)
-        ),
+	data: new SlashCommandBuilder()
+		.setName("setwebhook")
+		.setDescription("Set Webhook to Receive Notifications.")
+		.addStringOption((option) =>
+			option
+				.setName("webhook")
+				.setDescription(
+					"Discord Webhook. In order to create a webhook, refer to Discord guides."
+				)
+				.setRequired(true)
+		),
 
-    async execute(interaction) {
-        try {
-            const discordUserID = interaction.user.id;
-            const discordWebhook = await interaction.options.getString("webhook");
+	async execute(interaction) {
+		try {
+			const discordUserID = interaction.user.id;
+			const discordWebhook = await interaction.options.getString("webhook");
 
-            const userInstance = new User();
+			// Validate the webhook URL using regex
+			if (!webhookRegex.test(discordWebhook)) {
+				return interaction.reply(
+					"Invalid webhook URL. Please provide a valid Discord webhook URL."
+				);
+			}
 
-            //TODO: Add Discord Webhook Link Validation on this
-            await userInstance.setUserWebhook(discordUserID, discordWebhook);
+			// Set the user's webhook and handle the result
+			const webhookSet = await userInstance.setUserWebhook(
+				discordUserID,
+				discordWebhook
+			);
 
-            // user.setUserWebhook(discordWebhook);
-            // if (await userInstance.findUser(discordUserID) === null) {
-            //     userInstance.createUser(discordUserID);
-
-            //     return interaction.reply("Added User!");
-            // } else {
-            //     return interaction.reply("Error Occurred. Check Logs.");
-            // }
-
-            return interaction.reply("Set Webhook");
-        } catch (error) {
-            signale.error("setWebhook Command Error: ", error);
-            return interaction.reply("An error has occurred while executing this command. Please check logs.");
-        }
-    }
-}
+			if (webhookSet) {
+				return interaction.reply("Webhook set successfully.");
+			} else {
+				// user not found
+				return interaction.reply("Failed to set webhook. Please check logs.");
+			}
+		} catch (error) {
+			signale.error("setWebhook Command Error: ", error);
+			return interaction.reply(
+				"An error has occurred while executing this command. Please check logs."
+			);
+		}
+	},
+};
