@@ -3,7 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
 
 class User extends Model {
-	static associate() {}
+	static associate() { }
 
 	async findUser(discordUserID) {
 		try {
@@ -36,8 +36,8 @@ class User extends Model {
 		try {
 			const user = await this.findUser(discordUserID);
 			if (user) {
+				signale.complete("User Removed: ", user.discordUserID);
 				await user.destroy();
-				signale.complete("User Removed: ", user);
 				return true; // Return true to indicate success
 			} else {
 				signale.warn("User Not Found, No Action Taken.");
