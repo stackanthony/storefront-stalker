@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
-const { User } = require("../../database/models/exportmodels");
+const { User } = require("../../database/models");
 
 signale.note("Temporary Add Command, need to add users a different way whether based on server / key, etc")
 
@@ -22,7 +22,7 @@ module.exports = {
 
             const userInstance = new User();
 
-            const user = await userInstance.findUser(discordUserID);
+            const user = await userInstance.createUser(discordUserID);
 
             signale.info(user);
             // if (await userInstance.findUser(discordUserID) === null) {

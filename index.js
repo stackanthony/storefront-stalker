@@ -10,8 +10,8 @@ client.commands = new Collection();
 const foldersPath = path.join(__dirname, "src/commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
-const db = require("./src/database/index.js");
-const models = require("./src/database/models/exportmodels.js");
+const db = require("./src/database");
+const models = require("./src/database/models");
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
