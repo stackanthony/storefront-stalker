@@ -13,9 +13,17 @@ Seller.init(
             unique: true,
         },
         asinCount: {
-            type: DataTypes.In,
+            type: DataTypes.INTEGER,
             unique: true,
+        },
+        sellerASINS: {
+            type: DataTypes.ARRAY
+        },
+        usersTracking: {
+            type: DataTypes.ARRAY,
+            allowNull: false,
         }
+        
     },
     { paranoid: true, sequelize: db, modelName: "User" }
 );
