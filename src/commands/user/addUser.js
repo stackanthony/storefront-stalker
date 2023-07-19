@@ -22,13 +22,18 @@ module.exports = {
 
             const userInstance = new User();
 
-            if (await userInstance.findUser(discordUserID) === null) {
-                userInstance.createUser(discordUserID);
+            const user = userInstance.findUser(discordUserID);
 
-                return interaction.reply("Added User!");
-            } else {
-                return interaction.reply("Error Occurred. Check Logs.");
-            }
+            signale.info(user);
+            // if (await userInstance.findUser(discordUserID) === null) {
+            //     userInstance.createUser(discordUserID);
+
+            //     return interaction.reply("Added User!");
+            // } else {
+            //     return interaction.reply("Error Occurred. Check Logs.");
+            // }
+
+            return interaction.reply("Test");
         } catch (error) {
             signale.error("createUser Command Error: ", error);
             return interaction.reply("An error has occurred while executing this command. Please check logs.");

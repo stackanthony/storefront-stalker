@@ -9,10 +9,13 @@ class User extends Model {
 		try {
 			const user = await User.findOne({ where: { discordUserID: discordUserID } });
 
-			return user;
+			if (user) {
+				return user;
+			} else {
+				throw new Error("Couldn't Find User");
+			}
 		} catch (error) {
-			signale.error("Couldn't Find User: ", error);
-			return false;
+			signale.error("Couldn't Complete Find Request: ", error);
 		}
 	}
 
@@ -28,11 +31,22 @@ class User extends Model {
 
 	async removeUser(discordUserID) {
 		try {
-			const user = await findUser(discordUserID);
-
+			const user = await this.findUser(discordUserID);
+			await user.destroy();
 			signale.complete("User Removed: ", user);
 		} catch (error) {
 			signale.error("User Remove Error: ", error)
+		}
+	}
+
+	async setUserWebhook(discordWebhook) {
+		try {
+			const user = await this.findUser(discordUserID);
+
+			
+
+		} catch (error) {
+			signale.error("Couldn't Set User Webhook. Refer to Logs");
 		}
 	}
 }
