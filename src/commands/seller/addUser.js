@@ -22,7 +22,7 @@ module.exports = {
 
             const userInstance = new User();
 
-            if (userInstance.findUser(discordUserID) === false) {
+            if (await userInstance.findUser(discordUserID) === null) {
                 userInstance.createUser(discordUserID);
 
                 return interaction.reply("Added User!");
