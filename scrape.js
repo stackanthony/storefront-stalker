@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const signale = require("signale");
-=======
-const fetch = require("node-fetch");
->>>>>>> 95d7c5297260170bafac8b48178affb4946f43e3
 const cheerio = require("cheerio");
 const signale = require("signale");
 
