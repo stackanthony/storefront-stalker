@@ -10,8 +10,11 @@ class User extends Model {
 			const user = await User.findOne({
 				where: { discordUserID: discordUserID },
 			});
-
-			return !!user; // Return true if user is found, false otherwise
+			if (user) {
+				return user; // Return true if user is found, false otherwise
+			} else {
+				throw new Error("User Not Found");
+			}
 		} catch (error) {
 			signale.error("Couldn't Complete Find Request: ", error);
 			return false; // Return false in case of an error
@@ -51,12 +54,8 @@ class User extends Model {
 		try {
 			const user = await this.findUser(discordUserID);
 			console.log(user);
-			if (user === true) {
-				console.log("user found");
-				console.log("discordWebhook before assignment:", discordWebhook);
-				user.discordWebhook = discordWebhook.toString();
-				console.log(user.discordWebhook)
-				console.log("bef save");
+			if (user) {
+				user.discordWebhook = discordWebhook;
 				await user.save();
 				console.log("after save");
 				return true; // Return true to indicate success
