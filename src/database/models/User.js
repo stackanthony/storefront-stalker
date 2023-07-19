@@ -16,6 +16,7 @@ class User extends Model {
 			}
 		} catch (error) {
 			signale.error("Couldn't Complete Find Request: ", error);
+			throw error;
 		}
 	}
 
@@ -26,6 +27,7 @@ class User extends Model {
 			signale.success("User Created: ", user.discordUserID);
 		} catch (error) {
 			signale.error("User DB Creation Error: ", error);
+			throw error;
 		}
 	}
 
@@ -35,7 +37,8 @@ class User extends Model {
 			await user.destroy();
 			signale.complete("User Removed: ", user);
 		} catch (error) {
-			signale.error("User Remove Error: ", error)
+			signale.error("User Remove Error: ", error);
+			throw error;
 		}
 	}
 
@@ -46,6 +49,7 @@ class User extends Model {
 			await user.save();
 		} catch (error) {
 			signale.error("Couldn't Set User Webhook. Ensure that user exists.");
+			throw error;
 		}
 	}
 }
