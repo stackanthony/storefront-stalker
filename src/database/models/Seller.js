@@ -17,17 +17,17 @@ Seller.init(
             unique: true,
         },
         sellerASINS: {
-            type: DataTypes.ARRAY
+            type: DataTypes.ARRAY(DataTypes.STRING)
         },
         usersTracking: {
-            type: DataTypes.ARRAY,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
         }
-        
+
     },
-    { paranoid: true, sequelize: db, modelName: "User" }
+    { paranoid: true, sequelize: db, modelName: "Seller" }
 );
 
-signale.success("User Model Initalized");
+signale.success("Seller Model Initalized");
 
 module.exports = Seller;

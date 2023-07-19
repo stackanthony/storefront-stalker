@@ -1,6 +1,5 @@
 const signale = require("signale");
 const cheerio = require("cheerio");
-const signale = require("signale");
 
 const scrape = async (sellerID) => {
 	const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
