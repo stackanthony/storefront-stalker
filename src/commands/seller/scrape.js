@@ -6,8 +6,10 @@ module.exports = {
 		.setName('scrape')
 		.setDescription('scrapes!'),
 	async execute(interaction) {
-		const sellerID = "ASBIGH1CERS24";
+		const sellerID = "A2QHNIQ1AC1T10";
 		const sellerAsins = await scrape(sellerID);
-		return interaction.reply(`Seller ASINs: ${sellerAsins.join(", ")}`);
+		console.log(sellerAsins);
+		return interaction.reply("Done");
+		// return interaction.reply(`Seller ASINs: ${sellerAsins.join(", ")}`);
 	},
 };
