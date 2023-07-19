@@ -39,14 +39,13 @@ class User extends Model {
 		}
 	}
 
-	async setUserWebhook(discordWebhook) {
+	async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
-
-			
-
+			user.discordWebhook = discordWebhook;
+			await user.save();
 		} catch (error) {
-			signale.error("Couldn't Set User Webhook. Refer to Logs");
+			signale.error("Couldn't Set User Webhook. Ensure that user exists.");
 		}
 	}
 }
