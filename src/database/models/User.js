@@ -9,8 +9,10 @@ class User extends Model {
 User.init(
 	{
 		discordUserID: {
-			type: DataTypes.STRING,
+			type: DataTypes.INTEGER,
 			unique: true,
+			allowNull: false,
+			primaryKey: true
 		},
 		discordWebhook: {
 			type: DataTypes.STRING,
@@ -19,7 +21,16 @@ User.init(
 	},
 	{ paranoid: true, sequelize: db, modelName: "User" }
 );
-
 signale.success("User Model Initalized");
+
+const createUser = async ({ discordUserID }) => {
+	try {
+		const user = await User.create({ discordUserID: discordUserID });
+
+		signale.success("User Created: ", user.discordUserID);
+	} catch (error) {
+		signale.error("User DB Creation Error: ", error);
+	}
+}
 
 module.exports = User;

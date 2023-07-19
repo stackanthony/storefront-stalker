@@ -39,10 +39,6 @@ const syncModelsAndAssociations = async () => {
 
 	// refer to https://sequelize.org/docs/v6/core-concepts/model-basics/ for sync options. Specificically force and alter.
 	await db.sync({ force: true });
-
-	//Sets up One-To-Many Relationship
-	models.Seller.hasMany(models.User);
-	models.User.belongsTo(models.Seller);
 };
 
 syncModelsAndAssociations().then(() => signale.success("DB Synced!")).catch((error) => signale.error("Sync Error: ", error));
