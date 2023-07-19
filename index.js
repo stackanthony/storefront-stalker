@@ -11,7 +11,7 @@ const foldersPath = path.join(__dirname, "src/commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
 const db = require("./src/database/index.js");
-const models = require("./src/database/models/index.js");
+const models = require("./src/database/models/exportmodels.js");
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -36,7 +36,8 @@ async () => {
 		models[model].associate(models);
 	});
 
-	await db.sync({ force: f });
+	// refer to https://sequelize.org/docs/v6/core-concepts/model-basics/ for sync options. Specificically force and alter.
+	await db.sync({ force: true });
 };
 
 client.once(Events.ClientReady, () => {
