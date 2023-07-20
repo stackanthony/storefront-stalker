@@ -1,14 +1,23 @@
 const signale = require("signale");
+const { webhookID, webhookToken } = require("../../config.json");
+
+signale.config({
+    displayTimestamp: true,
+    displayDate: true,
+})
+
 const { Seller } = require("../database/models");
 const AmazonScraper = require("./AmazonScraper");
 
 const { WebhookClient, EmbedBuilder } = require("discord.js");
-const webhookClient = new WebhookClient({ id: "1131325956968169472", token: "0360hIQV1fPPxiJ2u7Ebdllhurr0zOH0ipIiU9Mb7jh0Y1gEIiwSPEe5Bx6qN6p13_uu" })
+const webhookClient = new WebhookClient({
+    id: webhookID, token: webhookToken
+});
 
 const getRandomInterval = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const randomTimer = () => {
-    const randomInterval = getRandomInterval(3000, 6000);
+    const randomInterval = getRandomInterval(15000, 20000);
     return new Promise((res) => setTimeout(res, randomInterval));
 };
 
@@ -25,13 +34,14 @@ module.exports = class AmazonMonitor {
 
             for (const { sellerID } of sellerIDs) {
 
+                signale.await("Monitoring for new Seller Products...");
+
                 //Get ASINS for the seller using the scraper
                 const sellerAsins = await this.scraper.getSellerASINS(sellerID);
 
                 //Get existing ASINS for the seller from the database
                 const existingAsins = await this.seller.getASINSFromSellerID(sellerID);
                 const existingAsinSet = new Set(existingAsins.map((ASIN) => ASIN));
-                signale.info(existingAsinSet);
 
                 const newAsins = sellerAsins.filter((ASIN) => !existingAsinSet.has(ASIN));
 
@@ -39,11 +49,10 @@ module.exports = class AmazonMonitor {
                     // NEW PRODUCT FOUND
                     newAsins.forEach(async (ASIN) => {
                         const { productTitle, productPrice, productSize, productStyle, fulfillmentType } = await this.scraper.getASINInformation(ASIN);
-                        
+
                         webhookClient.send({
-                            content: `Product Title: `
-                        })
-                    
+                            content: `Product Title: ${productTitle}`
+                        });
                     })
                 }
 

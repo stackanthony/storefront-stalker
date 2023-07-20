@@ -21,16 +21,8 @@ module.exports = class AmazonScraper {
     const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 
     try {
-      const getPageAsins = async (pageURL) => {
-        const pageHtml = await fetchHTML(pageURL);
-        const $page = cheerio.load(pageHtml);
-        return $page("div[data-asin]")
-          .map((i, ASIN) => $page(ASIN).attr("data-asin"))
-          .get()
-          .filter((asin) => asin && asin.trim() !== ""); // Exclude empty and whitespace-only ASINs
-      };
-
       const html = await fetchHTML(queryURL);
+      signale.info("Made Request to Seller Page");
       const $ = cheerio.load(html);
 
       const resultsText = $(
@@ -40,11 +32,19 @@ module.exports = class AmazonScraper {
 
       let sellerAsins = [];
 
+      const getPageAsins = async (pageURL) => {
+        const pageHtml = await fetchHTML(pageURL);
+        const $page = cheerio.load(pageHtml);
+        return $page("div[data-asin]")
+          .map((i, ASIN) => $page(ASIN).attr("data-asin"))
+          .get()
+          .filter((asin) => asin && asin.trim() !== ""); // Exclude empty and whitespace-only ASINs
+      };
+
       if (resultsText.includes("-")) {
         // Contains more than 16 results, needs pagination
         const totalResults = resultsText.split(" ")[2];
         const totalPageCount = Math.ceil(totalResults / 16);
-        signale.info("Total Page Count: ", totalPageCount);
 
         for (let page = 1; page <= totalPageCount; page++) {
           signale.info("Scraping page: ", page);
@@ -59,11 +59,11 @@ module.exports = class AmazonScraper {
         sellerAsins = await getPageAsins(queryURL);
       }
       // signale.success the scraped asins length and the num pages
-      signale.success("Scraped ASINs Count: ", sellerAsins.length);
-      signale.success(
-        "Scraped Page Count: ",
-        Math.ceil(sellerAsins.length / 16) + 1
-      );
+      // signale.success("Scraped ASINs Count: ", sellerAsins.length);
+      // signale.success(
+      //   "Scraped Page Count: ",
+      //   Math.ceil(sellerAsins.length / 16) + 1
+      // );
 
       return sellerAsins;
     } catch (error) {
@@ -77,6 +77,7 @@ module.exports = class AmazonScraper {
 
     try {
       const html = await fetchHTML(queryURL);
+      signale.info("Made Request to receive ASIN information.")
       const $ = cheerio.load(html);
 
       const productTitle = $("#productTitle").text().trim();
