@@ -1,22 +1,46 @@
 const signale = require("signale");
 const cheerio = require("cheerio");
 
+const headers = {
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+  Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.5",
+};
+
+const fetchHTML = async (url) => {
+  const res = await fetch(url, { headers });
+  return await res.text();
+};
+
 module.exports = class AmazonScraper {
+  // async #getSellerPage(sellerID) {
+  //   try {
+  //     const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
+  //     const headers = {
+  //       "User-Agent":
+  //         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+  //       Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  //       "Accept-Language": "en-US,en;q=0.5",
+  //     };
+
+  //     const sellerPage = (await fetch(queryURL, { headers })).text();
+
+  //     return sellerPage;
+  //     // const fetchHTML = async (url) => {
+  //     //   const res = await fetch(url, { headers });
+  //     //   return res.text();
+  //     // }
+  //     // return ;
+  //   } catch (error) {
+  //     signale.error("Unable to get seller page due to: ", error);
+  //   }
+  // }
+
   async getSellerASINS(sellerID) {
     const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
-    const headers = {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.5",
-    };
 
     try {
-      const fetchHTML = async (url) => {
-        const res = await fetch(url, { headers });
-        return await res.text();
-      };
-
       const getPageAsins = async (pageURL) => {
         const pageHtml = await fetchHTML(pageURL);
         const $page = cheerio.load(pageHtml);
@@ -63,6 +87,38 @@ module.exports = class AmazonScraper {
     } catch (error) {
       signale.error("Error occurred while scraping:", error.message);
       return [];
+    }
+  }
+
+  async getASINInformation(ASIN) {
+    const queryURL = `https://www.amazon.com/dp/${ASIN}/`
+
+    try {
+      const html = await fetchHTML(queryURL);
+      const $ = cheerio.load(html);
+
+      const productTitle = $("#productTitle").text().trim();
+
+      const productPrice = $("#corePrice_feature_div > div > span.a-price.aok-align-center > span.a-offscreen").text().split("$")[1];
+
+      const productSize = $("#variation_size_name > div > span").text().trim();
+
+      const productStyle = $("#variation_style_name > div > span").text().trim();
+
+      const fulfillmentType = (() => {
+        let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
+        return fulfillmentTypeText === "Amazon" || fulfillmentTypeText === "Amazon.com" ? "FBA" : "FBM";
+      })();
+      return {
+        productTitle,
+        productPrice,
+        productSize,
+        productStyle,
+        fulfillmentType
+      }
+    } catch (error) {
+      signale.error("Couldn't get ASIN Information: ", error);
+      throw error;
     }
   }
 };
