@@ -37,7 +37,7 @@ const syncModelsAndAssociations = async () => {
   });
 
   // refer to https://sequelize.org/docs/v6/core-concepts/model-basics/ for sync options. Specificically force and alter.
-  await db.sync({ force: true });
+  await db.sync({ alter: true });
 };
 
 syncModelsAndAssociations()

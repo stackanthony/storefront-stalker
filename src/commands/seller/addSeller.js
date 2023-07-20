@@ -20,16 +20,18 @@ module.exports = {
     async execute(interaction) {
         try {
 
+            await interaction.deferReply();
+
             const sellerID = await interaction.options.getString("sellerid");
             // Check if the user exists
             const sellerExists = await sellerInstance.findSeller(sellerID);
 
             if (sellerExists) {
-                return interaction.reply("Seller already exists.");
+                return interaction.editReply("Seller already exists.");
             } else {
                 // Create the user if it doesn't exist
                 await sellerInstance.createSeller(sellerID);
-                return interaction.reply("Seller added to the database!");
+                return interaction.editReply("Seller added to the database!");
             }
         } catch (error) {
             signale.error("createSeller Command Error: ", error);
