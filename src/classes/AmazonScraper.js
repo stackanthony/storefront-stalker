@@ -13,6 +13,8 @@ const fetchHTML = async (url) => {
   return await res.text();
 };
 
+const timer = ms => new Promise(res => setTimeout(res, ms))
+
 module.exports = class AmazonScraper {
   // async #getSellerPage(sellerID) {
   //   try {
@@ -71,6 +73,8 @@ module.exports = class AmazonScraper {
           const pageURL = `${queryURL}&page=${page}`;
           const pageAsins = await getPageAsins(pageURL);
           sellerAsins.push(...pageAsins);
+
+          await timer(2000);
         }
       } else {
         // All results on one page
