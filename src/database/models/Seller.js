@@ -41,25 +41,27 @@ class Seller extends Model {
 
   async updateUsersTracking(sellerID, userID) {
     try {
-      const seller = await this.findSeller(sellerID);
+      const seller = await Seller.findByPk(sellerID);
+  
       if (seller) {
-        console.log("1" + seller.usersTracking)
-        console.log(typeof seller.usersTracking)
-        seller.usersTracking.push(userID.toString());
-        console.log("2" + seller.usersTracking)
-        await seller.save();
-        console.log("3" + seller.usersTracking)
-        signale.success("Seller Updated: ", sellerID);
+        let newArray = Object.assign([], seller.usersTracking);
+        newArray.push(userID.toString());
+  
+        // Update the usersTracking array in the database
+        await seller.update({ usersTracking: newArray });
+  
+        console.log("Seller Updated:", sellerID);
         return true;
       } else {
-        signale.warn("Seller Not Found, No Action Taken.");
+        console.warn("Seller Not Found, No Action Taken.");
         return false;
       }
     } catch (error) {
-      signale.error("Seller Update Error: ", error);
+      console.error("Seller Update Error:", error);
       return false;
     }
   }
+  
 
   async removeSeller(sellerID) {
     try {

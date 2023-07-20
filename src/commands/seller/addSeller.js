@@ -25,7 +25,7 @@ module.exports = {
             const sellerID = await interaction.options.getString("sellerid");
             // Check if the user exists
             const sellerExists = await sellerInstance.findSeller(sellerID);
-
+            
             if (sellerExists) {
                 await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
                 return interaction.editReply("Seller already exists in the database, you can now track it!");
