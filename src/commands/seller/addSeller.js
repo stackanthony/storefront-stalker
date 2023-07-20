@@ -4,41 +4,49 @@ const signale = require("signale");
 const { Seller } = require("../../database/models");
 const sellerInstance = new Seller();
 
-signale.note("Change command to query if user is monitoring seller. Currently, checks the whole seller table.");
+signale.note(
+	"Change command to query if user is monitoring seller. Currently, checks the whole seller table."
+);
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("addseller")
-        .setDescription("Add Stalker to Seller")
-        .addStringOption((option) =>
-            option
-                .setName("sellerid")
-                .setDescription("Amazon Seller ID")
-                .setRequired(true)
-        ),
+	data: new SlashCommandBuilder()
+		.setName("addseller")
+		.setDescription("Add Stalker to Seller")
+		.addStringOption((option) =>
+			option
+				.setName("sellerid")
+				.setDescription("Amazon Seller ID")
+				.setRequired(true)
+		),
 
-    async execute(interaction) {
-        try {
+	async execute(interaction) {
+		try {
+			await interaction.deferReply();
 
-            await interaction.deferReply();
+			const sellerID = await interaction.options.getString("sellerid");
+			// Check if the user exists
+			const sellerExists = await sellerInstance.findSeller(sellerID);
 
-            const sellerID = await interaction.options.getString("sellerid");
-            // Check if the user exists
-            const sellerExists = await sellerInstance.findSeller(sellerID);
-            
-            if (sellerExists) {
-                await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
-                return interaction.editReply("Seller already exists in the database, you can now track it!");
-            } else {
-                // Create the user if it doesn't exist
-                await sellerInstance.createSeller(sellerID, interaction.user.id);
-                return interaction.editReply("Seller added to the database!");
-            }
-        } catch (error) {
-            signale.error("createSeller Command Error: ", error);
-            return interaction.reply(
-                "An error has occurred while executing this command. Please check logs."
-            );
-        }
-    },
+			if (sellerExists) {
+				// Check if the user ID exists in the usersTracking array
+				if (sellerExists.usersTracking && sellerExists.usersTracking.includes(interaction.user.id)) {
+					return interaction.editReply("You are already tracking this seller!");
+				}
+
+				await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
+				return interaction.editReply(
+					"Seller already exists in the database, you can now track it!"
+				);
+			} else {
+				// Create the user if it doesn't exist
+				await sellerInstance.createSeller(sellerID, interaction.user.id);
+				return interaction.editReply("Seller added to the database!");
+			}
+		} catch (error) {
+			signale.error("createSeller Command Error: ", error);
+			return interaction.reply(
+				"An error has occurred while executing this command. Please check logs."
+			);
+		}
+	},
 };
