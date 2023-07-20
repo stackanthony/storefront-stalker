@@ -12,6 +12,11 @@ const commandFolders = fs.readdirSync(foldersPath);
 
 const db = require("./src/database");
 const models = require("./src/database/models");
+const AmazonMonitor = require("./src/classes/AmazonMonitor");
+
+const monitor = new AmazonMonitor();
+
+monitor.monitor();
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
