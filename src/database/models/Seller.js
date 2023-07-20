@@ -31,7 +31,6 @@ class Seller extends Model {
         sellerASINS: asins,
       });
       signale.success("Seller Created: ", sellerID);
-      return true;
     } catch (error) {
       signale.error("Seller DB Creation Error: ", error);
       throw error;
