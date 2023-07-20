@@ -50,14 +50,14 @@ class Seller extends Model {
 				// Update the usersTracking array in the database
 				await seller.update({ usersTracking: newArray });
 
-				console.log("Seller Updated:", sellerID);
+				signale.success("Seller Updated:", sellerID);
 				return true;
 			} else {
-				console.warn("Seller Not Found, No Action Taken.");
+				signale.error("Seller Not Found, No Action Taken.");
 				return false;
 			}
 		} catch (error) {
-			console.error("Seller Update Error:", error);
+			signale.error("Seller Update Error:", error);
 			return false;
 		}
 	}

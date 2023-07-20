@@ -34,14 +34,12 @@ module.exports = {
 				}
 
 				await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
-				return interaction.editReply(
-					"Seller already exists in the database, you can now track it!"
-				);
 			} else {
 				// Create the user if it doesn't exist
 				await sellerInstance.createSeller(sellerID, interaction.user.id);
-				return interaction.editReply("Seller added to the database!");
-			}
+            }
+            
+            return interaction.editReply("Seller is now being tracked!");
 		} catch (error) {
 			signale.error("createSeller Command Error: ", error);
 			return interaction.reply(
