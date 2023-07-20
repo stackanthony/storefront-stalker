@@ -22,18 +22,42 @@ class Seller extends Model {
     }
   }
 
-  async createSeller(sellerID) {
+  async createSeller(sellerID, userID) {
     try {
       const asins = await scraper.getSellerASINS(sellerID);
       await Seller.create({
         sellerID: sellerID,
         asinCount: asins.length,
         sellerASINS: asins,
+        usersTracking: [userID],
       });
+      // usersTracking.push(userID);
       signale.success("Seller Created: ", sellerID);
     } catch (error) {
       signale.error("Seller DB Creation Error: ", error);
       throw error;
+    }
+  }
+
+  async updateUsersTracking(sellerID, userID) {
+    try {
+      const seller = await this.findSeller(sellerID);
+      if (seller) {
+        console.log("1" + seller.usersTracking)
+        console.log(typeof seller.usersTracking)
+        seller.usersTracking.push(userID.toString());
+        console.log("2" + seller.usersTracking)
+        await seller.save();
+        console.log("3" + seller.usersTracking)
+        signale.success("Seller Updated: ", sellerID);
+        return true;
+      } else {
+        signale.warn("Seller Not Found, No Action Taken.");
+        return false;
+      }
+    } catch (error) {
+      signale.error("Seller Update Error: ", error);
+      return false;
     }
   }
 

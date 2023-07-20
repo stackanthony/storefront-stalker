@@ -27,10 +27,11 @@ module.exports = {
             const sellerExists = await sellerInstance.findSeller(sellerID);
 
             if (sellerExists) {
-                return interaction.editReply("Seller already exists.");
+                await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
+                return interaction.editReply("Seller already exists in the database, you can now track it!");
             } else {
                 // Create the user if it doesn't exist
-                await sellerInstance.createSeller(sellerID);
+                await sellerInstance.createSeller(sellerID, interaction.user.id);
                 return interaction.editReply("Seller added to the database!");
             }
         } catch (error) {
