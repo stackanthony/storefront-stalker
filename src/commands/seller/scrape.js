@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const scrape = require("../../../scrape.js");
+const scrape = require("../../classes/AmazonScraper.js");
 
 module.exports = {
 	data: new SlashCommandBuilder().setName("scrape").setDescription("scrapes!"),
