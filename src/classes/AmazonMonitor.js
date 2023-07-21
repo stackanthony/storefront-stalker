@@ -41,7 +41,7 @@ module.exports = class AmazonMonitor {
 
                 //Get existing ASINS for the seller from the database
                 const existingAsins = await this.seller.getASINSFromSellerID(sellerID);
-                const existingAsinSet = new Set(existingAsins.map((ASIN) => ASIN));
+                const existingAsinSet = new Set(existingAsins);
 
                 const newAsins = sellerAsins.filter((ASIN) => !existingAsinSet.has(ASIN));
 
