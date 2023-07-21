@@ -89,14 +89,16 @@ module.exports = class AmazonScraper {
 
       // const productStyle = $("#variation_style_name > div > span").text().trim();
 
-      const fulfillmentType = (() => {
-        let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
-        return fulfillmentTypeText === "Amazon" || fulfillmentTypeText === "Amazon.com" ? "FBA" : "FBM";
-      })();
+      // const fulfillmentType = (() => {
+      //   let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
+      //   return fulfillmentTypeText === "Amazon" || fulfillmentTypeText === "Amazon.com" ? "FBA" : "FBM";
+      // })();
+      const fulfillmentType = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
+      let fulfillmentTypeText = fulfillmentType === "Amazon" || fulfillmentType === "Amazon.com" ? "FBA" : "FBM";
       return {
         productTitle,
         productPrice,
-        fulfillmentType
+        fulfillmentTypeText
       }
     } catch (error) {
       signale.error("Couldn't get ASIN Information: ", error);
