@@ -10,6 +10,7 @@ const headers = {
 
 const fetchHTML = async (url) => {
   const res = await fetch(url, { headers });
+  signale.info(`[${res.status}] Requested: ${url}`)
   return await res.text();
 };
 
