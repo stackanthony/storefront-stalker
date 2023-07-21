@@ -47,12 +47,16 @@ module.exports = class AmazonMonitor {
 
                 if (newAsins.length > 0) {
                     // NEW PRODUCT FOUND
+                    signale.info(newAsins);
                     newAsins.forEach(async (ASIN) => {
                         const { productTitle, productPrice, productSize, productStyle, fulfillmentType } = await this.scraper.getASINInformation(ASIN);
-
+                        signale.success("Found Product: ", productTitle);
                         webhookClient.send({
-                            content: `Product Title: ${productTitle}`
+                            content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nFulfillment Type: ${fulfillmentType}`
                         });
+
+                        await this.seller.updateSellerASINS(sellerID, ASIN);
+
                     })
                 }
 

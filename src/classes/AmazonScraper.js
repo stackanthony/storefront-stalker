@@ -82,11 +82,11 @@ module.exports = class AmazonScraper {
 
       const productTitle = $("#productTitle").text().trim();
 
-      const productPrice = $("#corePrice_feature_div > div > span.a-price.aok-align-center > span.a-offscreen").text().split("$")[1];
+      const productPrice = $("#corePriceDisplay_desktop_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen").text();
 
-      const productSize = $("#variation_size_name > div > span").text().trim();
+      // const productSize = $("#variation_size_name > div > span").text().trim();
 
-      const productStyle = $("#variation_style_name > div > span").text().trim();
+      // const productStyle = $("#variation_style_name > div > span").text().trim();
 
       const fulfillmentType = (() => {
         let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
@@ -95,8 +95,6 @@ module.exports = class AmazonScraper {
       return {
         productTitle,
         productPrice,
-        productSize,
-        productStyle,
         fulfillmentType
       }
     } catch (error) {
