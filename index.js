@@ -102,4 +102,4 @@ const test = async () => {
   // signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };
 
-test();
+// test();
