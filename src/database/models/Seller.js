@@ -101,8 +101,8 @@ class Seller extends Model {
         let newArray = Object.assign([], seller.sellerASINS);
         newArray.push(ASIN.toString());
 
-        // Update the usersTracking array in the database
-        await seller.update({ sellerASINS: newArray });
+        // Update the usersTracking array in the database, and incremement the asinCount variable
+        await seller.update({ sellerASINS: newArray, asinCount: seller.asinCount++ });
 
         signale.success("Updated SellerASINS with new value:", ASIN);
         return true;
