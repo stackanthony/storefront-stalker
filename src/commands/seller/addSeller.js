@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { Seller } = require("../../database/models");
-const sellerInstance = new Seller();
+// const sellerInstance = new Seller();
 
 signale.note(
 	"Change command to query if user is monitoring seller. Currently, checks the whole seller table."
@@ -25,7 +25,7 @@ module.exports = {
 
 			const sellerID = await interaction.options.getString("sellerid");
 			// Check if the user exists
-			const sellerExists = await sellerInstance.findSeller(sellerID);
+			const sellerExists = await Seller.findSeller(sellerID);
 
 			if (sellerExists) {
 				// Check if the user ID exists in the usersTracking array
@@ -33,10 +33,10 @@ module.exports = {
 					return interaction.editReply("You are already tracking this seller!");
 				}
 
-				await sellerInstance.updateUsersTracking(sellerID, interaction.user.id);
+				await Seller.updateUsersTracking(sellerID, interaction.user.id);
 			} else {
 				// Create the user if it doesn't exist
-				await sellerInstance.createSeller(sellerID, interaction.user.id);
+				await Seller.createSeller(sellerID, interaction.user.id);
             }
             
             return interaction.editReply("Seller is now being tracked!");

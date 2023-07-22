@@ -18,7 +18,7 @@ const timer = ms => new Promise(res => setTimeout(res, ms))
 
 module.exports = class AmazonScraper {
 
-  async getSellerASINS(sellerID) {
+  static async getSellerASINS(sellerID) {
     const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 
     try {
@@ -73,7 +73,7 @@ module.exports = class AmazonScraper {
     }
   }
 
-  async getASINInformation(ASIN) {
+  static async getASINInformation(ASIN) {
     const queryURL = `https://www.amazon.com/dp/${ASIN}/`
 
     try {

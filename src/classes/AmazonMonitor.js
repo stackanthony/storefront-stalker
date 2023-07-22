@@ -7,7 +7,7 @@ signale.config({
 })
 
 const { Seller } = require("../database/models");
-const AmazonScraper = require("./AmazonScraper");
+const scraper = require("./AmazonScraper");
 
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const webhookClient = new WebhookClient({
@@ -23,24 +23,23 @@ const randomTimer = () => {
 
 module.exports = class AmazonMonitor {
 
-    constructor() {
-        this.scraper = new AmazonScraper();
-        this.seller = new Seller();
-    }
+    // constructor() {
+    //     // this.seller = new Seller();
+    // }
 
     async monitor() {
         try {
-            const sellerIDs = await this.seller.getAllSellerIDs();
+            const sellerIDs = await Seller.getAllSellerIDs();
 
             for (const { sellerID } of sellerIDs) {
 
                 signale.await("Monitoring for new Seller Products...");
 
                 //Get ASINS for the seller using the scraper
-                const sellerAsins = await this.scraper.getSellerASINS(sellerID);
+                const sellerAsins = await scraper.getSellerASINS(sellerID);
 
                 //Get existing ASINS for the seller from the database
-                const existingAsins = await this.seller.getASINSFromSellerID(sellerID);
+                const existingAsins = await Seller.getASINSFromSellerID(sellerID);
                 const existingAsinSet = new Set(existingAsins);
 
                 const newAsins = sellerAsins.filter((ASIN) => !existingAsinSet.has(ASIN));
@@ -49,13 +48,13 @@ module.exports = class AmazonMonitor {
                     // NEW PRODUCT FOUND
                     signale.info(newAsins);
                     newAsins.forEach(async (ASIN) => {
-                        const { productTitle, productPrice, productSize, productStyle, fulfillmentType } = await this.scraper.getASINInformation(ASIN);
+                        const { productTitle, productPrice, productSize, productStyle, fulfillmentType } = await scraper.getASINInformation(ASIN);
                         signale.success("Found Product: ", productTitle);
                         webhookClient.send({
                             content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nFulfillment Type: ${fulfillmentType}`
                         });
 
-                        await this.seller.updateSellerASINS(sellerID, ASIN);
+                        await Seller.updateSellerASINS(sellerID, ASIN);
 
                     })
                 }

@@ -13,6 +13,7 @@ const commandFolders = fs.readdirSync(foldersPath);
 const db = require("./src/database");
 const models = require("./src/database/models");
 const AmazonMonitor = require("./src/classes/AmazonMonitor");
+const AmazonScraper = require("./src/classes/AmazonScraper");
 const monitor = new AmazonMonitor();
 
 
@@ -98,6 +99,7 @@ const test = async () => {
   while (true) {
     await monitor.monitor();
   }
+  // signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };
 
 test();

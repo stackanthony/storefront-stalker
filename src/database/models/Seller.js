@@ -1,13 +1,12 @@
 const db = require("../index.js");
 const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
-const AmazonScraper = require("../../classes/AmazonScraper.js");
-const scraper = new AmazonScraper();
+const scraper = require("../../classes/AmazonScraper.js");
 
 class Seller extends Model {
   static associate() { }
 
-  async findSeller(sellerID) {
+  static async findSeller(sellerID) {
     try {
       const seller = await Seller.findOne({
         where: { sellerID: sellerID },
@@ -22,7 +21,7 @@ class Seller extends Model {
     }
   }
 
-  async getAllSellerIDs() {
+  static async getAllSellerIDs() {
     try {
       const sellers = await Seller.findAll({
         attributes: ["sellerID"]
@@ -37,7 +36,7 @@ class Seller extends Model {
     }
   }
 
-  async getASINSFromSellerID(sellerID) {
+  static async getASINSFromSellerID(sellerID) {
     try {
       const sellerASINS = await Seller.findOne({
         attributes: ["sellerASINS"],
@@ -54,7 +53,7 @@ class Seller extends Model {
     }
   }
 
-  async createSeller(sellerID, userID) {
+  static async createSeller(sellerID, userID) {
     try {
       const asins = await scraper.getSellerASINS(sellerID);
       await Seller.create({
@@ -71,7 +70,7 @@ class Seller extends Model {
     }
   }
 
-  async updateUsersTracking(sellerID, userID) {
+  static async updateUsersTracking(sellerID, userID) {
     try {
       const seller = await Seller.findByPk(sellerID);
 
@@ -94,7 +93,7 @@ class Seller extends Model {
     }
   }
 
-  async updateSellerASINS(sellerID, ASIN) {
+  static async updateSellerASINS(sellerID, ASIN) {
     try {
       const seller = await Seller.findByPk(sellerID);
 
@@ -117,7 +116,7 @@ class Seller extends Model {
     }
   }
 
-  async removeSeller(sellerID) {
+  static async removeSeller(sellerID) {
     try {
       const seller = await this.findSeller(sellerID);
       if (seller) {
