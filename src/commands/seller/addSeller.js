@@ -29,7 +29,10 @@ module.exports = {
 
 			if (sellerExists) {
 				// Check if the user ID exists in the usersTracking array
-				if (sellerExists.usersTracking && sellerExists.usersTracking.includes(interaction.user.id)) {
+				if (
+					sellerExists.usersTracking &&
+					sellerExists.usersTracking.includes(interaction.user.id)
+				) {
 					return interaction.editReply("You are already tracking this seller!");
 				}
 
@@ -37,9 +40,9 @@ module.exports = {
 			} else {
 				// Create the user if it doesn't exist
 				await Seller.createSeller(sellerID, interaction.user.id);
-            }
-            
-            return interaction.editReply("Seller is now being tracked!");
+			}
+
+			return interaction.editReply("Seller is now being tracked!");
 		} catch (error) {
 			signale.error("createSeller Command Error: ", error);
 			return interaction.reply(

@@ -3,7 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
 
 class User extends Model {
-	static associate() { }
+	static associate() {}
 
 	static async findUser(discordUserID) {
 		try {
@@ -62,7 +62,7 @@ class User extends Model {
 				return false; // Return false when user is not found
 			}
 		} catch (error) {
-			signale.error("Couldn't Set User Webhook: ", error)
+			signale.error("Couldn't Set User Webhook: ", error);
 			return false; // Return false in case of an error
 		}
 	}
