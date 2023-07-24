@@ -5,7 +5,7 @@ const signale = require("signale");
 class User extends Model {
 	static associate() { }
 
-	async findUser(discordUserID) {
+	static async findUser(discordUserID) {
 		try {
 			const user = await User.findOne({
 				where: { discordUserID: discordUserID },
@@ -20,7 +20,7 @@ class User extends Model {
 		}
 	}
 
-	async createUser(discordUserID) {
+	static async createUser(discordUserID) {
 		try {
 			await User.create({ discordUserID: discordUserID });
 
@@ -32,7 +32,7 @@ class User extends Model {
 		}
 	}
 
-	async removeUser(discordUserID) {
+	static async removeUser(discordUserID) {
 		try {
 			const user = await this.findUser(discordUserID);
 			if (user) {
@@ -49,7 +49,7 @@ class User extends Model {
 		}
 	}
 
-	async setUserWebhook(discordUserID, discordWebhook) {
+	static async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
 			console.log(user);
