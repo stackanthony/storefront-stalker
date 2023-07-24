@@ -29,10 +29,17 @@ module.exports = class AmazonScraper {
       const resultsText = $(
         "#search > span:nth-child(9) > div > h1 > div > div.sg-col-14-of-20.sg-col-18-of-24.sg-col.s-breadcrumb.sg-col-10-of-16.sg-col-6-of-12 > div > div > span"
       ).text();
-      signale.info(resultsText);
+      signale.info("Product Count: ", resultsText);
 
-      let sellerAsins = [];
+      const sellerAsins = [];
+      const totalResults = parseInt(resultsText.split(" "));
 
+      if (isNaN(totalResults) || totalResults <= 0) {
+        signale.warn("No products found for the seller.");
+        return sellerAsins;
+      }
+
+      // Function to get ASINs from a specific page
       const getPageAsins = async (pageURL) => {
         const pageHtml = await fetchHTML(pageURL);
         const $page = cheerio.load(pageHtml);
@@ -42,9 +49,9 @@ module.exports = class AmazonScraper {
           .filter((asin) => asin && asin.trim() !== ""); // Exclude empty and whitespace-only ASINs
       };
 
-      if (resultsText.includes("-")) {
+      // Check if pagination is needed
+      if (totalResults > 16) {
         // Contains more than 16 results, needs pagination
-        const totalResults = resultsText.split(" ")[2];
         const totalPageCount = Math.ceil(totalResults / 16);
 
         for (let page = 1; page <= totalPageCount; page++) {
@@ -57,14 +64,17 @@ module.exports = class AmazonScraper {
         }
       } else {
         // All results on one page
-        sellerAsins = await getPageAsins(queryURL);
+        sellerAsins.push(
+          ...$("div[data-asin]")
+            .map((i, ASIN) => $(ASIN).attr("data-asin"))
+            .get()
+            .filter((asin) => asin && asin.trim() !== "") // Exclude empty and whitespace-only ASINs
+        );
       }
+
       // signale.success the scraped asins length and the num pages
       // signale.success("Scraped ASINs Count: ", sellerAsins.length);
-      // signale.success(
-      //   "Scraped Page Count: ",
-      //   Math.ceil(sellerAsins.length / 16) + 1
-      // );
+      // signale.success("Scraped Page Count: ", Math.ceil(sellerAsins.length / 16) + 1);
 
       return sellerAsins;
     } catch (error) {
@@ -94,16 +104,16 @@ module.exports = class AmazonScraper {
       //   let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
       //   return fulfillmentTypeText === "Amazon" || fulfillmentTypeText === "Amazon.com" ? "FBA" : "FBM";
       // })();
-      const fulfillmentType = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
-      let fulfillmentTypeText = fulfillmentType === "Amazon" || fulfillmentType === "Amazon.com" ? "FBA" : "FBM";
+      const scrapedType = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
+      let fulfillmentType = scrapedType === "Amazon" || scrapedType === "Amazon.com" ? "FBA" : "FBM";
 
       // console.log(typeof productTitle);
       // console.log(typeof productPrice);
-      // console.log(typeof fulfillmentType);
+      // console.log(fulfillmentTypeText);
       return {
         productTitle,
         productPrice,
-        fulfillmentTypeText
+        fulfillmentType
       }
     } catch (error) {
       signale.error("Couldn't get ASIN Information: ", error);
