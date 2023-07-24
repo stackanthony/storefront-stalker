@@ -96,14 +96,14 @@ module.exports = class AmazonScraper {
       const scrapePrice = $("#corePriceDisplay_desktop_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen").text();
       const productPrice = scrapePrice ? scrapePrice : "NO BUY BOX";
 
-      // const productSize = $("#variation_size_name > div > span").text().trim();
-
-      // const productStyle = $("#variation_style_name > div > span").text().trim();
-
-      // const fulfillmentType = (() => {
-      //   let fulfillmentTypeText = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
-      //   return fulfillmentTypeText === "Amazon" || fulfillmentTypeText === "Amazon.com" ? "FBA" : "FBM";
-      // })();
+      const productCategory = $("#wayfinding-breadcrumbs_feature_div > ul > li:nth-child(1) > span > a").text().trim();
+      const salesRank = $('.a-text-bold')
+        .parent()
+        .contents()
+        .filter((index, element) => element.nodeType === 3)
+        .text()
+        .trim()
+        .split(' ')[0];
       const scrapedType = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
       let fulfillmentType = scrapedType === "Amazon" || scrapedType === "Amazon.com" ? "FBA" : "FBM";
 
@@ -113,11 +113,12 @@ module.exports = class AmazonScraper {
       return {
         productTitle,
         productPrice,
+        productCategory,
+        salesRank,
         fulfillmentType
       }
     } catch (error) {
       signale.error("Couldn't get ASIN Information: ", error);
-      throw error;
     }
   }
 };
