@@ -11,7 +11,7 @@ const scraper = require("./AmazonScraper");
 
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const webhookClient = new WebhookClient({
-	url: webhookURL
+	url: webhookURL,
 });
 
 const getRandomInterval = (min, max) =>
@@ -23,17 +23,12 @@ const randomTimer = () => {
 };
 
 module.exports = class AmazonMonitor {
-	// constructor() {
-	//     // this.seller = new Seller();
-	// }
-
 	async monitor() {
 		try {
 			const sellerIDs = await Seller.getAllSellerIDs();
-
+			signale.await("Started monitoring for new Seller Products...");
 			for (const { sellerID } of sellerIDs) {
-				signale.await("Monitoring for new Seller Products...");
-
+				signale.info("Watching seller: ", sellerID)
 				//Get ASINS for the seller using the scraper
 				const sellerAsins = await scraper.getSellerASINS(sellerID);
 
@@ -57,9 +52,40 @@ module.exports = class AmazonMonitor {
 							fulfillmentType,
 						} = await scraper.getASINInformation(ASIN);
 						signale.success("Found Product: ", productTitle);
+						const embed = new EmbedBuilder()
+							.setTitle("New Product Found!")
+							.setColor("#00ff00")
+							.setThumbnail(
+								"https://cdn.discordapp.com/attachments/843199952569942026/843200003534000394/Amazon-Logo.png"
+							)
+							.addFields(
+								{
+									name: "Product Title",
+									value: productTitle,
+								},
+								{
+									name: "Product Price",
+									value: productPrice,
+								},
+								{
+									name: "Product Category",
+									value: productCategory,
+								},
+								{
+									name: "Sales Rank",
+									value: salesRank,
+								},
+								{
+									name: "Fulfillment Type",
+									value: fulfillmentType,
+								}
+							);
 						webhookClient.send({
-							content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nProduct Category: ${productCategory}\nSales Rank: ${salesRank}\nFulfillment Type: ${fulfillmentType}`,
+							embeds: [embed],
 						});
+						// webhookClient.send({
+						// 	content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nProduct Category: ${productCategory}\nSales Rank: ${salesRank}\nFulfillment Type: ${fulfillmentType}`,
+						// });
 						await Seller.updateSellerASINS(sellerID, ASIN);
 					});
 				}
