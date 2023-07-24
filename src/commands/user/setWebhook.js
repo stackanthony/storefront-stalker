@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { User } = require("../../database/models");
-const userInstance = new User();
 
 // Regular expression pattern for Discord webhook URL
 const webhookRegex = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
@@ -33,7 +32,7 @@ module.exports = {
 			}
 
 			// Set the user's webhook and handle the result
-			const webhookSet = await userInstance.setUserWebhook(
+			const webhookSet = await User.setUserWebhook(
 				discordUserID,
 				discordWebhook
 			);

@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { User } = require("../../database/models");
-const userInstance = new User();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -14,7 +13,7 @@ module.exports = {
       const discordUserID = interaction.user.id;
 
       // Reset the user's stored webhook and handle the result
-      const webhookReset = await userInstance.setUserWebhook(discordUserID, null);
+      const webhookReset = await User.setUserWebhook(discordUserID, null);
 
       if (webhookReset) {
         return interaction.reply("Webhook reset successfully.");

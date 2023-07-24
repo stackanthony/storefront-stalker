@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { User } = require("../../database/models");
-const userInstance = new User();
 
 signale.note(
 	"Temporary Add Command, need to add users a different way whether based on server / key, etc"
@@ -23,13 +22,13 @@ module.exports = {
 		try {
 			const discordUserID = await interaction.options.getString("userid");
 			// Check if the user exists
-			const userExists = await userInstance.findUser(discordUserID);
+			const userExists = await User.findUser(discordUserID);
 
 			if (userExists) {
 				return interaction.reply("User already exists.");
 			} else {
 				// Create the user if it doesn't exist
-				const createdUser = await userInstance.createUser(discordUserID);
+				await User.createUser(discordUserID);
 				return interaction.reply("User added to the database!");
 			}
 		} catch (error) {

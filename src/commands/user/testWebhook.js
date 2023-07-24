@@ -3,8 +3,6 @@ const signale = require("signale");
 const fetch = require("node-fetch");
 
 const { User } = require("../../database/models");
-const userInstance = new User();
-
 // Regular expression pattern for Discord webhook URL
 const webhookRegex = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
 
@@ -18,7 +16,7 @@ module.exports = {
 			const discordUserID = interaction.user.id;
 
 			// Check if the user has a stored webhook
-			const user = await userInstance.findUser(discordUserID);
+			const user = await User.findUser(discordUserID);
 			const discordWebhook = user?.discordWebhook || null;
 
 			if (!discordWebhook) {
