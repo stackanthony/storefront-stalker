@@ -1,5 +1,5 @@
 const signale = require("signale");
-const { webhookID, webhookToken } = require("../../config.json");
+const { webhookURL } = require("../../config.json");
 
 signale.config({
 	displayTimestamp: true,
@@ -11,8 +11,7 @@ const scraper = require("./AmazonScraper");
 
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const webhookClient = new WebhookClient({
-	id: webhookID,
-	token: webhookToken,
+	url: webhookURL
 });
 
 const getRandomInterval = (min, max) =>
