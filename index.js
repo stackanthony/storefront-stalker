@@ -93,14 +93,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-client.login(token);
+client.login(token).then(async () => {
+  await test();
+});
 
 const test = async () => {
-  // while (true) {
-  //   await monitor.monitor();
-  // }
-  AmazonScraper.getASINInformation("B07YZQTKDJ");
+  while (true) {
+    await monitor.monitor();
+  }
+  // let {fulfillmentType} = await AmazonScraper.getASINInformation("B07YZQTKDJ");
+  // signale.info(fulfillmentType);
   // signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };
 
-test();
