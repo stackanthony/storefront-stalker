@@ -83,7 +83,8 @@ module.exports = class AmazonScraper {
 
       const productTitle = $("#productTitle").text().trim();
 
-      const productPrice = $("#corePriceDisplay_desktop_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen").text();
+      const scrapePrice = $("#corePriceDisplay_desktop_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen").text();
+      const productPrice = scrapePrice ? scrapePrice : "NO BUY BOX";
 
       // const productSize = $("#variation_size_name > div > span").text().trim();
 
@@ -95,6 +96,10 @@ module.exports = class AmazonScraper {
       // })();
       const fulfillmentType = $("#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span").text();
       let fulfillmentTypeText = fulfillmentType === "Amazon" || fulfillmentType === "Amazon.com" ? "FBA" : "FBM";
+
+      // console.log(typeof productTitle);
+      // console.log(typeof productPrice);
+      // console.log(typeof fulfillmentType);
       return {
         productTitle,
         productPrice,

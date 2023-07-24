@@ -96,10 +96,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
 client.login(token);
 
 const test = async () => {
-  while (true) {
-    await monitor.monitor();
-  }
+  // while (true) {
+  //   await monitor.monitor();
+  // }
+  AmazonScraper.getASINInformation("B07YZQTKDJ");
   // signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };
 
-// test();
+test();
