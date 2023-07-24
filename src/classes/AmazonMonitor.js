@@ -48,7 +48,7 @@ module.exports = class AmazonMonitor {
                     // NEW PRODUCT FOUND
                     signale.info(newAsins);
                     newAsins.forEach(async (ASIN) => {
-                        const { productTitle, productPrice, productSize, productStyle, fulfillmentType } = await scraper.getASINInformation(ASIN);
+                        const { productTitle, productPrice, fulfillmentType } = await scraper.getASINInformation(ASIN);
                         signale.success("Found Product: ", productTitle);
                         webhookClient.send({
                             content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nFulfillment Type: ${fulfillmentType}`
