@@ -1,19 +1,7 @@
 const signale = require("signale");
-const { webhookURL } = require("../../config.json");
-
-signale.config({
-	displayTimestamp: true,
-	displayDate: true,
-});
-
-const { Seller } = require("../database/models");
+const { Seller, User } = require("../database/models");
 const scraper = require("./AmazonScraper");
-
 const { WebhookClient, EmbedBuilder } = require("discord.js");
-const webhookClient = new WebhookClient({
-	url: webhookURL,
-});
-
 const getRandomInterval = (min, max) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -27,12 +15,21 @@ module.exports = class AmazonMonitor {
 		try {
 			const sellerIDs = await Seller.getAllSellerIDs();
 			signale.await("Started monitoring for new Seller Products...");
+
 			for (const { sellerID } of sellerIDs) {
 				signale.info("Watching seller: ", sellerID);
-				//Get ASINS for the seller using the scraper
+				const seller = await Seller.findOne({
+					where: { sellerID: sellerID }, // Add the where clause to specify the sellerID
+				});
+
+				if (!seller) {
+					continue; // If the seller doesn't exist, skip to the next one
+				}
+
+				// Get ASINS for the seller using the scraper
 				const sellerAsins = await scraper.getSellerASINS(sellerID);
 
-				//Get existing ASINS for the seller from the database
+				// Get existing ASINS for the seller from the database
 				const existingAsins = await Seller.getASINSFromSellerID(sellerID);
 				const existingAsinSet = new Set(existingAsins);
 
@@ -43,6 +40,12 @@ module.exports = class AmazonMonitor {
 				if (newAsins.length > 0) {
 					// NEW PRODUCT FOUND
 					signale.info(newAsins);
+
+					// Find all users tracking this seller
+					const usersTrackingSeller = await User.findAll({
+						where: { discordUserID: seller.usersTracking },
+					});
+
 					newAsins.forEach(async (ASIN) => {
 						const {
 							productTitle,
@@ -51,9 +54,8 @@ module.exports = class AmazonMonitor {
 							salesRank,
 							fulfillmentType,
 						} = await scraper.getASINInformation(ASIN);
+
 						signale.success("Found Product: ", productTitle);
-						console.log(`http://images.amazon.com/images/P/${ASIN}.01._SCMZZZZZZZ_.jpg`)
-						console.log(`http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`)
 						const embed = new EmbedBuilder()
 							.setAuthor({ name: "Amazon Stalker" })
 							.setTitle(`New Product Found! - ${ASIN}`)
@@ -96,12 +98,24 @@ module.exports = class AmazonMonitor {
 									value: fulfillmentType,
 								}
 							);
-						webhookClient.send({
-							embeds: [embed],
-						});
-						// webhookClient.send({
-						// 	content: `Product Title: ${productTitle}\nPrice: ${productPrice}\nProduct Category: ${productCategory}\nSales Rank: ${salesRank}\nFulfillment Type: ${fulfillmentType}`,
-						// });
+
+						// Send webhooks to each user tracking this seller
+						for (const user of usersTrackingSeller) {
+							if (!user.discordWebhook) {
+								signale.info(
+									"User doesn't have a webhook set: ",
+									user.discordUserID
+								);
+								continue; // If the user doesn't have a webhook set, skip to the next one
+							}
+							const webhookClient = new WebhookClient({
+								url: user.discordWebhook,
+							});
+							webhookClient.send({
+								embeds: [embed],
+							});
+						}
+
 						await Seller.updateSellerASINS(sellerID, ASIN);
 					});
 				}

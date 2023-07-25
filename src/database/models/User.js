@@ -52,7 +52,6 @@ class User extends Model {
 	static async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
-			console.log(user);
 			if (user) {
 				user.discordWebhook = discordWebhook;
 				await user.save();
