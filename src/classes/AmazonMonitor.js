@@ -28,7 +28,7 @@ module.exports = class AmazonMonitor {
 			const sellerIDs = await Seller.getAllSellerIDs();
 			signale.await("Started monitoring for new Seller Products...");
 			for (const { sellerID } of sellerIDs) {
-				signale.info("Watching seller: ", sellerID)
+				signale.info("Watching seller: ", sellerID);
 				//Get ASINS for the seller using the scraper
 				const sellerAsins = await scraper.getSellerASINS(sellerID);
 
@@ -53,12 +53,24 @@ module.exports = class AmazonMonitor {
 						} = await scraper.getASINInformation(ASIN);
 						signale.success("Found Product: ", productTitle);
 						const embed = new EmbedBuilder()
-							.setTitle("New Product Found!")
+							.setAuthor({ name: "Amazon Stalker" })
+							.setTitle(`New Product Found! - ${ASIN}`)
+							.setURL(`https://www.amazon.com/dp/${ASIN}`)
 							.setColor("#00ff00")
 							.setThumbnail(
-								"https://cdn.discordapp.com/attachments/843199952569942026/843200003534000394/Amazon-Logo.png"
+								"https://cdn.discordapp.com/attachments/1130962684968452286/1133185113421791342/2500px-Amazon_icon.png"
 							)
+							.setFooter({
+								text: "Amazon Stalker",
+								iconURL:
+									"https://cdn.discordapp.com/attachments/1130962684968452286/1133185113421791342/2500px-Amazon_icon.png",
+							})
+							.setTimestamp()
 							.addFields(
+								{
+									name: "Links",
+									value: `[Amazon](https://www.amazon.com/dp/${ASIN}) | [Keepa](https://keepa.com/#!product/1-${ASIN}) | [CamelCamelCamel](https://camelcamelcamel.com/product/${ASIN}) | [SellerAmp](https://sas.selleramp.com/sas/lookup?&search_term=${ASIN})`,
+								},
 								{
 									name: "Product Title",
 									value: productTitle,
