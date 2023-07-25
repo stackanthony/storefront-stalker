@@ -60,7 +60,7 @@ module.exports = class AmazonMonitor {
 							.setURL(`https://www.amazon.com/dp/${ASIN}`)
 							.setColor("#00ff00")
 							.setImage(
-								`http://images.amazon.com/images/P/${ASIN}.01._SCMZZZZZZZ_.jpg`
+								`https://graph.keepa.com/pricehistory.png?asin=${ASIN}&domain=com`
 							)
 							.setThumbnail(
 								`http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`
