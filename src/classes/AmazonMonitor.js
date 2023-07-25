@@ -52,18 +52,22 @@ module.exports = class AmazonMonitor {
 							fulfillmentType,
 						} = await scraper.getASINInformation(ASIN);
 						signale.success("Found Product: ", productTitle);
+						console.log(`http://images.amazon.com/images/P/${ASIN}.01._SCMZZZZZZZ_.jpg`)
+						console.log(`http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`)
 						const embed = new EmbedBuilder()
 							.setAuthor({ name: "Amazon Stalker" })
 							.setTitle(`New Product Found! - ${ASIN}`)
 							.setURL(`https://www.amazon.com/dp/${ASIN}`)
 							.setColor("#00ff00")
+							.setImage(
+								`http://images.amazon.com/images/P/${ASIN}.01._SCMZZZZZZZ_.jpg`
+							)
 							.setThumbnail(
-								"https://cdn.discordapp.com/attachments/1130962684968452286/1133185113421791342/2500px-Amazon_icon.png"
+								`http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`
 							)
 							.setFooter({
 								text: "Amazon Stalker",
-								iconURL:
-									"https://cdn.discordapp.com/attachments/1130962684968452286/1133185113421791342/2500px-Amazon_icon.png",
+								iconURL: `http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`,
 							})
 							.setTimestamp()
 							.addFields(
