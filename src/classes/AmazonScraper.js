@@ -64,7 +64,7 @@ module.exports = class AmazonScraper {
           const pageAsins = await getPageAsins(pageURL);
           sellerAsins.push(...pageAsins);
 
-          await timer(2000);
+          await timer(4000);
         }
       } else {
         // All results on one page
@@ -98,8 +98,8 @@ module.exports = class AmazonScraper {
       const productTitle = $("#productTitle").text().trim();
 
       const scrapePrice = $(
-        "#corePriceDisplay_desktop_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen"
-      ).text();
+        "#corePrice_feature_div > div > span.a-price.aok-align-center > span.a-offscreen"
+      ).first().text();
       const productPrice = scrapePrice ? scrapePrice : "NO BUY BOX";
 
       const productCategory = $(
@@ -107,6 +107,7 @@ module.exports = class AmazonScraper {
       )
         .text()
         .trim();
+      const productImage = $("#landingImage").attr("src");
       const salesRank = $(".a-text-bold")
         .parent()
         .contents()
@@ -117,18 +118,16 @@ module.exports = class AmazonScraper {
       const scrapedType = $(
         "#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span"
       ).text();
-      let fulfillmentType =
+      const fulfillmentType =
         scrapedType === "Amazon" || scrapedType === "Amazon.com"
           ? "FBA"
           : "FBM";
 
-      // console.log(typeof productTitle);
-      // console.log(typeof productPrice);
-      // console.log(fulfillmentTypeText);
       return {
         productTitle,
         productPrice,
         productCategory,
+        productImage,
         salesRank,
         fulfillmentType,
       };

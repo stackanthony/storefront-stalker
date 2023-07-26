@@ -51,6 +51,7 @@ module.exports = class AmazonMonitor {
 							productTitle,
 							productPrice,
 							productCategory,
+							productImage,
 							salesRank,
 							fulfillmentType,
 						} = await scraper.getASINInformation(ASIN);
@@ -64,12 +65,10 @@ module.exports = class AmazonMonitor {
 							.setImage(
 								`https://graph.keepa.com/pricehistory.png?asin=${ASIN}&domain=com`
 							)
-							.setThumbnail(
-								`http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`
-							)
+							.setThumbnail(productImage)
 							.setFooter({
 								text: "Amazon Stalker",
-								iconURL: `http://images.amazon.com/images/P/${ASIN}.01._LZZZZZZZ_.jpg`,
+								iconURL: `https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amazon_icon.svg/2500px-Amazon_icon.svg.png`,
 							})
 							.setTimestamp()
 							.addFields(
@@ -120,6 +119,7 @@ module.exports = class AmazonMonitor {
 					});
 				}
 
+				signale.await("Delaying next request...");
 				await randomTimer();
 			}
 		} catch (error) {
