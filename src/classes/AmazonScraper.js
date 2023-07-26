@@ -116,13 +116,13 @@ module.exports = class AmazonScraper {
         .trim()
         .split(" ")[0];
       const scrapedType = $(
-        "#tabular-buybox > div > div.a-expander-content.a-expander-partial-collapse-content > div.tabular-buybox-container > div:nth-child(4) > div > span"
-      ).text();
-      const fulfillmentType =
-        scrapedType === "Amazon" || scrapedType === "Amazon.com"
+        "#tabular-buybox > div.tabular-buybox-container > div:nth-child(4) > div > span"
+      ).first().text();
+      let fulfillmentType =
+        (scrapedType === "Amazon" || scrapedType === "Amazon.com")
           ? "FBA"
           : "FBM";
-
+      fulfillmentType = productPrice === "NO BUY BOX" ? productPrice : fulfillmentType;
       return {
         productTitle,
         productPrice,

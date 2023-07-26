@@ -101,7 +101,7 @@ const runMonitor = async () => {
 	}
 	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");
 	// signale.info(`ASINS Length: ${asins.length}\nASINS: ${asins}`);
-	// let {fulfillmentType} = await AmazonScraper.getASINInformation("B07YZQTKDJ");
+	// let { fulfillmentType } = await AmazonScraper.getASINInformation("B00AFV4DVG");
 	// signale.info(fulfillmentType);
 	// signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };
