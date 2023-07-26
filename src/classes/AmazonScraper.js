@@ -136,4 +136,23 @@ module.exports = class AmazonScraper {
       signale.error("Couldn't get ASIN Information: ", error);
     }
   }
+
+  static async checkValidSellerID(sellerID) {
+    const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
+
+    try {
+      const html = await fetchHTML(queryURL);
+      const $ = cheerio.load(html);
+
+      const results = $("#search > span:nth-child(9) > div > h1 > div > div.sg-col-14-of-20.sg-col-18-of-24.sg-col.s-breadcrumb.sg-col-10-of-16.sg-col-6-of-12 > div > div > span").text();
+
+      if (results) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      signale.error("An error occurred while checking valid seller ID: ", error);
+    }
+  }
 };

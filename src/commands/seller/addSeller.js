@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
 const { Seller } = require("../../database/models");
-// const sellerInstance = new Seller();
+const AmazonScraper = require("../../classes/AmazonScraper");
 
 signale.note(
 	"Change command to query if user is monitoring seller. Currently, checks the whole seller table."
@@ -24,7 +24,11 @@ module.exports = {
 			await interaction.deferReply();
 
 			const sellerID = await interaction.options.getString("sellerid");
-			// Check if the user exists
+
+			if (!(await AmazonScraper.checkValidSellerID(sellerID))) {
+				return interaction.editReply("Seller ID doesn't exist. Make sure you have inputted the Seller ID correctly.");
+			}
+			// Check if the seller exists in DB
 			const sellerExists = await Seller.findSeller(sellerID);
 
 			if (sellerExists) {
