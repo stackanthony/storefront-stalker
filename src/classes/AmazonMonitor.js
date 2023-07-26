@@ -11,7 +11,7 @@ const randomTimer = () => {
 };
 
 module.exports = class AmazonMonitor {
-	async monitor() {
+	async run() {
 		try {
 			const sellerIDs = await Seller.getAllSellerIDs();
 			signale.await("Started monitoring for new Seller Products...");

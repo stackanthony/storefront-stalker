@@ -97,7 +97,7 @@ client.login(token).then(async () => {
 
 const runMonitor = async () => {
 	while (true) {
-		await monitor.monitor();
+		await monitor.run();
 	}
 	// let {fulfillmentType} = await AmazonScraper.getASINInformation("B07YZQTKDJ");
 	// signale.info(fulfillmentType);
