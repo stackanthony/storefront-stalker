@@ -93,6 +93,7 @@ class Seller extends Model {
 		}
 	}
 
+	//update seller ASINS array by appending single ASIN (parameter)
 	static async updateSellerASINS(sellerID, ASIN) {
 		try {
 			const seller = await Seller.findByPk(sellerID);

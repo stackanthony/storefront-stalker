@@ -36,7 +36,7 @@ module.exports = class AmazonScraper {
       signale.info("Product Count: ", resultsText);
 
       const sellerAsins = [];
-      const totalResults = parseInt(resultsText.split(" "));
+      const totalResults = parseInt(resultsText.split(" ")[2]);
 
       if (isNaN(totalResults) || totalResults <= 0) {
         signale.warn("No products found for the seller.");
