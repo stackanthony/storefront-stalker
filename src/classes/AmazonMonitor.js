@@ -6,10 +6,9 @@ const getRandomInterval = (min, max) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
 const randomTimer = () => {
-	const randomInterval = getRandomInterval(15000, 20000);
+	const randomInterval = getRandomInterval(20000, 30000);
 	return new Promise((res) => setTimeout(res, randomInterval));
 };
-
 
 module.exports = class AmazonMonitor {
 	async run() {
