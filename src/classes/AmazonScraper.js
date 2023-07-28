@@ -97,10 +97,10 @@ module.exports = class AmazonScraper {
 
       const productTitle = $("#productTitle").text().trim();
 
-      const scrapePrice = $(
+      const scrapedPrice = $(
         "#corePrice_feature_div > div > span.a-price.aok-align-center > span.a-offscreen"
       ).first().text();
-      const productPrice = scrapePrice ? scrapePrice : "NO BUY BOX";
+      const productPrice = scrapedPrice ? scrapedPrice : "NO BUY BOX";
 
       const productCategory = $(
         "#wayfinding-breadcrumbs_feature_div > ul > li:nth-child(1) > span > a"
@@ -108,13 +108,10 @@ module.exports = class AmazonScraper {
         .text()
         .trim();
       const productImage = $("#landingImage").attr("src");
-      const salesRank = $(".a-text-bold")
-        .parent()
-        .contents()
-        .filter((index, element) => element.nodeType === 3)
-        .text()
-        .trim()
-        .split(" ")[0];
+
+      const scrapedSalesRank = $("#detailBulletsWrapper_feature_div > ul:nth-child(4) > li > span").find('span.a-text-bold:contains("Best Sellers Rank:")').parent().text().trim().split(" ")[4];
+      const salesRank = scrapedSalesRank ? scrapedSalesRank : "Unknown";
+
       const scrapedType = $(
         "#tabular-buybox > div.tabular-buybox-container > div:nth-child(4) > div > span"
       ).first().text();
