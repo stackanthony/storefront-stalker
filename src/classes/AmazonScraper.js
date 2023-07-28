@@ -22,7 +22,7 @@ const fetchHTML = async (url) => {
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 module.exports = class AmazonScraper {
-  static async getSellerASINS(sellerID) {
+  static async getSellerASINS(sellerID, paginationDelay) {
     const queryURL = `https://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 
     try {
@@ -64,7 +64,7 @@ module.exports = class AmazonScraper {
           const pageAsins = await getPageAsins(pageURL);
           sellerAsins.push(...pageAsins);
 
-          await timer(4000);
+          await timer(paginationDelay);
         }
       } else {
         // All results on one page
