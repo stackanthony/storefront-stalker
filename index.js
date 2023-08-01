@@ -100,9 +100,10 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	// while (true) {
-	// 	await monitor.run();
-	// }
+	while (true) {
+		await monitor.run();
+	}
+	// await models.Seller.deleteASIN("ASBIGH1CERS24", "B07YZQTKDJ");
 	// signale.info(await models.Seller.findSeller("A1GMWX1A7RR16Y"));
 	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");
 	// signale.info(`ASINS Length: ${asins.length}\nASINS: ${asins}`);

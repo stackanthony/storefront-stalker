@@ -40,23 +40,33 @@ module.exports = class AmazonMonitor {
 	}
 
 	async processSeller(seller) {
-		const sellerAsins = await scraper.getSellerASINS(seller.sellerID, 4000);
-		const existingAsins = await Seller.getASINSFromSellerID(seller.sellerID);
-		const existingAsinSet = new Set(existingAsins);
+		try {
+			const sellerAsins = await scraper.getSellerASINS(seller.sellerID, 4000); // get current ASINs from Seller page
+			const existingAsins = await Seller.getASINSFromSellerID(seller.sellerID); // get existing ASINs that are in the DB
+			const existingAsinSet = new Set(existingAsins);
 
-		const newAsins = sellerAsins.filter((ASIN) => !existingAsinSet.has(ASIN));
+			const newAsins = sellerAsins.filter((ASIN) => !existingAsinSet.has(ASIN));
+			const removedAsins = existingAsins.filter((ASIN) => !sellerAsins.includes(ASIN));
 
-		if (newAsins.length > 0) {
-			// NEW PRODUCT FOUND
-			signale.info(newAsins);
+			if (newAsins.length > 0 || removedAsins.length > 0) {
+				// PROCESS NEW AND REMOVED ASINS
+				signale.info("New ASINs: ", newAsins);
+				signale.info("Removed ASINs: ", removedAsins);
 
-			const usersTrackingSeller = await User.findAll({
-				where: { discordUserID: seller.usersTracking },
-			});
+				const usersTrackingSeller = await User.findAll({
+					where: { discordUserID: seller.usersTracking },
+				});
 
-			for (const ASIN of newAsins) {
-				await this.processNewASIN(ASIN, seller, usersTrackingSeller);
+				for (const ASIN of newAsins) {
+					await this.processNewASIN(ASIN, seller, usersTrackingSeller);
+				}
+
+				for (const ASIN of removedAsins) {
+					await this.processRemovedASIN(ASIN, seller);
+				}
 			}
+		} catch (error) {
+			signale.error("Error processing seller: ", error);
 		}
 	}
 
@@ -84,6 +94,15 @@ module.exports = class AmazonMonitor {
 			}
 		} catch (error) {
 			signale.error("Error processing new ASIN: ", error);
+		}
+	}
+
+	async processRemovedASIN(ASIN, seller) {
+		try {
+			await Seller.deleteASIN(seller.sellerID, ASIN);
+			signale.info("Removed ASIN from database: ", ASIN);
+		} catch (error) {
+			signale.error("Error processing removed ASIN: ", error);
 		}
 	}
 

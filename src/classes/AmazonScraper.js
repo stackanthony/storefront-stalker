@@ -23,7 +23,6 @@ module.exports = class AmazonScraper {
 
     try {
       const html = await fetchHTML(queryURL);
-      signale.info("Made Request to Seller Page");
       const $ = cheerio.load(html);
 
       const resultsText = $(
@@ -32,7 +31,7 @@ module.exports = class AmazonScraper {
       signale.info("Product Count: ", resultsText);
 
       const sellerAsins = [];
-      const totalResults = parseInt(resultsText.split(" ")[0]);
+      const totalResults = parseInt(resultsText.split(" ")[2]);
 
       if (isNaN(totalResults) || totalResults <= 0) {
         signale.warn("No products found for the seller.");
@@ -75,7 +74,6 @@ module.exports = class AmazonScraper {
       // signale.success the scraped asins length and the num pages
       // signale.success("Scraped ASINs Count: ", sellerAsins.length);
       // signale.success("Scraped Page Count: ", Math.ceil(sellerAsins.length / 16) + 1);
-
       return sellerAsins;
     } catch (error) {
       signale.error("Error occurred while scraping:", error.message);
@@ -88,7 +86,6 @@ module.exports = class AmazonScraper {
 
     try {
       const html = await fetchHTML(queryURL);
-      signale.info("Made Request to receive ASIN information.");
       const $ = cheerio.load(html);
 
       const productTitle = $("#productTitle").text().trim();

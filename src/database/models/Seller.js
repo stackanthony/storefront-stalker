@@ -122,6 +122,27 @@ class Seller extends Model {
 		}
 	}
 
+	static async deleteASIN(sellerID, ASIN) {
+		try {
+			// First, fetch the seller record from the database
+			const seller = await Seller.findByPk(sellerID);
+
+			if (!seller) {
+				throw new Error("Seller not found.");
+			}
+
+			// Remove the ASIN from the sellerASINS array if it exists
+			const updatedSellerASINS = seller.sellerASINS.filter((existingASIN) => existingASIN !== ASIN);
+			const newASINcount = seller.asinCount - 1;
+			// Update the sellerASINS array in the database
+			await seller.update({ sellerASINS: updatedSellerASINS, asinCount: newASINcount });
+
+			signale.success(`Successfully deleted ASIN ${ASIN} from seller ${sellerID}.`);
+		} catch (error) {
+			signale.error("Error deleting ASIN from seller: ", error);
+		}
+	}
+
 	static async removeSeller(sellerID) {
 		try {
 			const seller = await this.findSeller(sellerID);
