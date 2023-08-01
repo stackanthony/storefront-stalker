@@ -96,9 +96,10 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	while (true) {
-		await monitor.run();
-	}
+	// while (true) {
+	// 	await monitor.run();
+	// }
+	// signale.info(await models.Seller.findSeller("A1GMWX1A7RR16Y"));
 	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");
 	// signale.info(`ASINS Length: ${asins.length}\nASINS: ${asins}`);
 	// let { fulfillmentType } = await AmazonScraper.getASINInformation("B07YZQTKDJ");

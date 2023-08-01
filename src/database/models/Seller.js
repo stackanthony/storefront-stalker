@@ -4,7 +4,7 @@ const signale = require("signale");
 const scraper = require("../../classes/AmazonScraper.js");
 
 class Seller extends Model {
-	static associate() {}
+	static associate() { }
 
 	static async findSeller(sellerID) {
 		try {
@@ -18,6 +18,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Error in findSeller: ", error);
+			throw error;
 		}
 	}
 
@@ -33,6 +34,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Error in getAllSellers: ", error);
+			throw error;
 		}
 	}
 
@@ -50,6 +52,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Error in getASINSFromSellerID: ", error);
+			throw error;
 		}
 	}
 
@@ -89,7 +92,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Seller Update Error:", error);
-			return false;
+			throw error;
 		}
 	}
 
@@ -115,7 +118,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Seller Update Error:", error);
-			return false;
+			throw error;
 		}
 	}
 
@@ -132,7 +135,7 @@ class Seller extends Model {
 			}
 		} catch (error) {
 			signale.error("Seller Remove Error: ", error);
-			return false;
+			throw error;
 		}
 	}
 }
@@ -155,7 +158,7 @@ Seller.init(
 			// allowNull: false,
 		},
 	},
-	{ paranoid: true, sequelize: db, modelName: "Seller" }
+	{ sequelize: db, modelName: "Seller" }
 );
 
 signale.success("Seller Model Initalized");

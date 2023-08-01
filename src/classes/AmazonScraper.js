@@ -36,7 +36,7 @@ module.exports = class AmazonScraper {
       signale.info("Product Count: ", resultsText);
 
       const sellerAsins = [];
-      const totalResults = parseInt(resultsText.split(" ")[2]);
+      const totalResults = parseInt(resultsText.split(" ")[0]);
 
       if (isNaN(totalResults) || totalResults <= 0) {
         signale.warn("No products found for the seller.");
@@ -83,7 +83,7 @@ module.exports = class AmazonScraper {
       return sellerAsins;
     } catch (error) {
       signale.error("Error occurred while scraping:", error.message);
-      return [];
+      throw error;
     }
   }
 
@@ -143,6 +143,7 @@ module.exports = class AmazonScraper {
       const results = $("#search > span:nth-child(9) > div > h1 > div > div.sg-col-14-of-20.sg-col-18-of-24.sg-col.s-breadcrumb.sg-col-10-of-16.sg-col-6-of-12 > div > div > span").text();
 
       if (results) {
+        signale.success("Seller ID Valid");
         return true;
       } else {
         return false;
