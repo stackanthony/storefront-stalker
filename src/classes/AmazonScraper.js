@@ -1,8 +1,4 @@
 const signale = require("signale");
-signale.config({
-  displayTimestamp: true,
-  displayDate: true,
-});
 
 const cheerio = require("cheerio");
 
