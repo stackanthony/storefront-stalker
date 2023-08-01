@@ -14,6 +14,10 @@ module.exports = class AmazonMonitor {
 	async run() {
 		try {
 			const sellerIDs = await Seller.getAllSellerIDs();
+			// check if there are any sellers to monitor
+			if (sellerIDs.length === 0) {
+				return signale.info("No sellers to monitor.");
+			}
 			signale.await("Started monitoring for new Seller Products...");
 
 			for (const { sellerID } of sellerIDs) {
