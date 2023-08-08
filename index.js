@@ -18,7 +18,7 @@ const db = require("./src/database");
 const models = require("./src/database/models");
 const AmazonMonitor = require("./src/classes/AmazonMonitor");
 const AmazonScraper = require("./src/classes/AmazonScraper");
-const monitor = new AmazonMonitor();
+const ProxyManager = require("./src/classes/ProxyManager");
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -100,9 +100,11 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	while (true) {
-		await monitor.run();
-	}
+	const proxies = await ProxyManager.getAllProxies();
+	console.log(proxies);
+	// while (true) {
+	// 	await AmazonMonitor.run();
+	// }
 	// await models.Seller.deleteASIN("ASBIGH1CERS24", "B07YZQTKDJ");
 	// signale.info(await models.Seller.findSeller("A1GMWX1A7RR16Y"));
 	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");

@@ -11,7 +11,7 @@ const randomTimer = () => {
 };
 
 module.exports = class AmazonMonitor {
-	async run() {
+	static async run() {
 		try {
 			const sellerIDs = await Seller.getAllSellerIDs();
 			// check if there are any sellers to monitor
@@ -39,7 +39,7 @@ module.exports = class AmazonMonitor {
 		}
 	}
 
-	async processSeller(seller) {
+	static async processSeller(seller) {
 		try {
 			const sellerAsins = await scraper.getSellerASINS(seller.sellerID, 4000); // get current ASINs from Seller page
 			const existingAsins = await Seller.getASINSFromSellerID(seller.sellerID); // get existing ASINs that are in the DB
@@ -70,7 +70,7 @@ module.exports = class AmazonMonitor {
 		}
 	}
 
-	async processNewASIN(ASIN, seller, usersTrackingSeller) {
+	static async processNewASIN(ASIN, seller, usersTrackingSeller) {
 		try {
 			const productInfo = await scraper.getASINInformation(ASIN);
 			signale.success("Found Product: ", productInfo.productTitle);
@@ -97,7 +97,7 @@ module.exports = class AmazonMonitor {
 		}
 	}
 
-	async processRemovedASIN(ASIN, seller) {
+	static async processRemovedASIN(ASIN, seller) {
 		try {
 			await Seller.deleteASIN(seller.sellerID, ASIN);
 			signale.info("Removed ASIN from database: ", ASIN);
