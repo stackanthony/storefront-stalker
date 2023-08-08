@@ -31,4 +31,20 @@ module.exports = class ProxyManager {
     getProxiesLength() {
         return this.proxies.length;
     }
+
+    getProxyHost(proxy) {
+        return proxy.split(":")[0];
+    }
+
+    getProxyPort(proxy) {
+        return proxy.split(":")[1];
+    }
+
+    getProxyUsername(proxy) {
+        return proxy.split(":")[2];
+    }
+    
+    getProxyPassword(proxy) {
+        return proxy.split(":")[3];
+    }
 }

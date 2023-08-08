@@ -1,6 +1,8 @@
 const signale = require("signale");
-
 const cheerio = require("cheerio");
+
+const ProxyManager = require("./ProxyManager");
+const proxyManager = new ProxyManager();
 
 const headers = {
   "User-Agent":
