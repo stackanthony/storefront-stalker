@@ -13,7 +13,22 @@ try {
 }
 module.exports = class ProxyManager {
 
-    static getAllProxies() {
-        return proxies;
+    constructor() {
+        this.proxies = proxies;
+        this.currentIndex = 0;
+    }
+
+    getNextProxy() {
+        const proxy = this.proxies[this.currentIndex];
+        this.currentIndex = (this.currentIndex + 1) % this.proxies.length; // Reset to 0 when reaching the end
+        return proxy;
+    }
+
+    getAllProxies() {
+        return this.proxies;
+    }
+
+    getProxiesLength() {
+        return this.proxies.length;
     }
 }

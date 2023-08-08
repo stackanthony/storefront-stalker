@@ -19,6 +19,7 @@ const models = require("./src/database/models");
 const AmazonMonitor = require("./src/classes/AmazonMonitor");
 const AmazonScraper = require("./src/classes/AmazonScraper");
 const ProxyManager = require("./src/classes/ProxyManager");
+const proxyManager = new ProxyManager();
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -100,8 +101,12 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	const proxies = await ProxyManager.getAllProxies();
-	console.log(proxies);
+	// const proxies = await ProxyManager.getAllProxies();
+	// console.log(proxies);
+	// console.log(proxyManager.getProxiesLength());
+	for (let i = 0; i < proxyManager.getProxiesLength(); i++) {
+		signale.info(proxyManager.getNextProxy());
+	}
 	// while (true) {
 	// 	await AmazonMonitor.run();
 	// }
