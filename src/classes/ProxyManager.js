@@ -28,23 +28,12 @@ module.exports = class ProxyManager {
         return this.proxies;
     }
 
-    getProxiesLength() {
-        return this.proxies.length;
-    }
-
-    getProxyHost(proxy) {
-        return proxy.split(":")[0];
-    }
-
-    getProxyPort(proxy) {
-        return proxy.split(":")[1];
-    }
-
-    getProxyUsername(proxy) {
-        return proxy.split(":")[2];
-    }
-    
-    getProxyPassword(proxy) {
-        return proxy.split(":")[3];
+    getProxyInformation(proxy) {
+        return {
+            host: proxy.split(":")[0],
+            port: proxy.split(":")[1],
+            username: proxy.split(":")[2],
+            password: proxy.split(":")[3],
+        }
     }
 }

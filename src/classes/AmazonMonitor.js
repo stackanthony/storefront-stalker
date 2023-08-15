@@ -6,7 +6,7 @@ const getRandomInterval = (min, max) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
 const randomTimer = () => {
-	const randomInterval = getRandomInterval(20000, 30000);
+	const randomInterval = getRandomInterval(30000, 40000);
 	return new Promise((res) => setTimeout(res, randomInterval));
 };
 
