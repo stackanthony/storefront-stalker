@@ -18,25 +18,20 @@ const fetchHTML = async (url) => {
   const { host, port, username, password } = proxyManager.getProxyInformation(proxy);
   signale.info(`Host: ${host}, Port: ${port}, Username: ${username}, Password: ${password}`);
 
-  // const instance = axios.create({
-  //   baseURL: url,
-  //   headers: headers,
-  //   httpsAgent: new HttpsProxyAgent(`http://${username}:${password}@${host}:${port}`),
-  //   // proxy: {
-  //   //   host: host,
-  //   //   port: parseInt(port),
-  //   //   auth: {
-  //   //     username: username,
-  //   //     password: password
-  //   //   }
-  //   // }
-  // })
-  const res = await axios.get(url, {
+  const proxyURL = `http://${username}:${password}@${host}:${port}`;
+
+  const agent = new HttpsProxyAgent(proxyURL);
+
+  const fetchOptions = {
+    method: 'GET',
     headers: headers,
-    httpsAgent: new HttpsProxyAgent(`http://${username}:${password}@${host}:${port}`),
-  });
-  signale.info(`[${res.status}] Requested: ${url}`);
-  return await res.text();
+    agent: agent,
+  };
+
+  const response = await fetch(url, fetchOptions);
+  signale.info(`[${response.status}] Requested: ${url}`);
+  const htmlText = await response.text();
+  return htmlText;
 };
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
