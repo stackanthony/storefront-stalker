@@ -16,10 +16,7 @@ const headers = {
 const fetchHTML = async (url) => {
   const proxy = proxyManager.getNextProxy();
   const { host, port, username, password } = proxyManager.getProxyInformation(proxy);
-  signale.info(`Host: ${host}, Port: ${port}, Username: ${username}, Password: ${password}`);
-
   const proxyURL = `http://${username}:${password}@${host}:${port}`;
-
   const agent = new HttpsProxyAgent(proxyURL);
 
   const fetchOptions = {
