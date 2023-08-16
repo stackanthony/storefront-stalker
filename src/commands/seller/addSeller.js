@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const signale = require("signale");
 
-const { Seller } = require("../../database/models");
+const { Seller, User } = require("../../database/models");
 const AmazonScraper = require("../../classes/AmazonScraper");
 
 signale.note(
@@ -22,6 +22,10 @@ module.exports = {
 	async execute(interaction) {
 		try {
 			await interaction.deferReply();
+			
+			if(!(await User.checkUserWebhook(interaction.user.id))) {
+				return interaction.editReply("You don't have a webhook set. Please set a webhook first.");
+			}
 
 			const sellerID = await interaction.options.getString("sellerid");
 

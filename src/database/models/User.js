@@ -65,6 +65,22 @@ class User extends Model {
 			return false; // Return false in case of an error
 		}
 	}
+	// check if userWebhook exists and return true or false
+	static async checkUserWebhook(discordUserID) {
+		try {
+			const user = await this.findUser(discordUserID);
+			if (user) {
+				if (user.discordWebhook) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} catch (error) {
+			signale.error("Couldn't Check User Webhook: ", error);
+			return false;
+		}
+	}
 }
 
 User.init(
