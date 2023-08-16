@@ -106,7 +106,7 @@ module.exports = class AmazonMonitor {
 		}
 	}
 
-	createEmbed({ productTitle, productPrice, productCategory, productImage, salesRank, fulfillmentType }, ASIN) {
+	static createEmbed({ productTitle, productPrice, productCategory, productImage, salesRank, fulfillmentType }, ASIN) {
 		const embed = new EmbedBuilder()
 			.setAuthor({ name: "Amazon Stalker" })
 			.setTitle(`New Product Found! - ${ASIN}`)

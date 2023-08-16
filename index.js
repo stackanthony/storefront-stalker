@@ -105,9 +105,9 @@ const runMonitor = async () => {
 	// for (let i = 0; i < proxyManager.getProxiesLength(); i++) {
 	// 	signale.info(proxyManager.getNextProxy());
 	// }
-	// while (true) {
-	// 	await AmazonMonitor.run();
-	// }
+	while (true) {
+		await AmazonMonitor.run();
+	}
 	// await models.Seller.deleteASIN("ASBIGH1CERS24", "B07YZQTKDJ");
 	// signale.info(await models.Seller.findSeller("A1GMWX1A7RR16Y"));
 	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");

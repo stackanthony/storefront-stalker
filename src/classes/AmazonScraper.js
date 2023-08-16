@@ -64,12 +64,19 @@ module.exports = class AmazonScraper {
           .filter((asin) => asin && asin.trim() !== ""); // Exclude empty and whitespace-only ASINs
       };
 
+      sellerAsins.push(
+        ...$("div[data-asin]")
+          .map((i, ASIN) => $(ASIN).attr("data-asin"))
+          .get()
+          .filter((asin) => asin && asin.trim() !== "") // Exclude empty and whitespace-only ASINs
+      );
+
       // Check if pagination is needed
       if (totalResults > 16) {
         // Contains more than 16 results, needs pagination
         const totalPageCount = Math.ceil(totalResults / 16);
 
-        for (let page = 1; page <= totalPageCount; page++) {
+        for (let page = 2; page <= totalPageCount; page++) {
           signale.info("Scraping page: ", page);
           const pageURL = `${queryURL}&page=${page}`;
           const pageAsins = await getPageAsins(pageURL);
@@ -77,16 +84,7 @@ module.exports = class AmazonScraper {
 
           await timer(paginationDelay);
         }
-      } else {
-        // All results on one page
-        sellerAsins.push(
-          ...$("div[data-asin]")
-            .map((i, ASIN) => $(ASIN).attr("data-asin"))
-            .get()
-            .filter((asin) => asin && asin.trim() !== "") // Exclude empty and whitespace-only ASINs
-        );
       }
-
       // signale.success the scraped asins length and the num pages
       // signale.success("Scraped ASINs Count: ", sellerAsins.length);
       // signale.success("Scraped Page Count: ", Math.ceil(sellerAsins.length / 16) + 1);
