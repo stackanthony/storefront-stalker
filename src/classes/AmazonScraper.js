@@ -47,7 +47,10 @@ module.exports = class AmazonScraper {
       signale.info("Product Count: ", resultsText);
 
       const sellerAsins = [];
-      const totalResults = parseInt(resultsText.split(" ")[2]);
+      // Depending on if there needs to be pagination or not, we will look for the totalResults, in different areas of the scraped page.
+      const totalResults = resultsText.includes("-") ? parseInt(resultsText.split(" ")[2]) : resultsText.split(" ")[0];
+
+      signale.info("Total Results: ", totalResults);
 
       if (isNaN(totalResults) || totalResults <= 0) {
         signale.warn("No products found for the seller.");
