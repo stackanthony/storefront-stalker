@@ -6,7 +6,7 @@
 <h3>◦ Developed with the software and tools listed below.</h3>
 
 <p align="center">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" style="pointer-events: none;"/>
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt= "Postgres">
 <img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" alt="Discord.js">
 <img src="https://img.shields.io/badge/Sequelize-52B0E7.svg?style&logo=Sequelize&logoColor=white" alt="Sequelize" />
