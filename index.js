@@ -99,20 +99,7 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	// const proxies = await ProxyManager.getAllProxies();
-	// console.log(proxies);
-	// console.log(proxyManager.getProxiesLength());
-	// for (let i = 0; i < proxyManager.getProxiesLength(); i++) {
-	// 	signale.info(proxyManager.getNextProxy());
-	// }
 	while (true) {
 		await AmazonMonitor.run();
 	}
-	// await models.Seller.deleteASIN("ASBIGH1CERS24", "B07YZQTKDJ");
-	// signale.info(await models.Seller.findSeller("A1GMWX1A7RR16Y"));
-	// const asins = await AmazonScraper.getSellerASINS("ASBIGH1CERS24");
-	// signale.info(`ASINS Length: ${asins.length}\nASINS: ${asins}`);
-	// let { fulfillmentType } = await AmazonScraper.getASINInformation("B07YZQTKDJ");
-	// signale.info(fulfillmentType);
-	// signale.info(await models.Seller.getASINSFromSellerID("ASBIGH1CERS24"))
 };

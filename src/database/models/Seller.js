@@ -4,8 +4,12 @@ const signale = require("signale");
 const scraper = require("../../classes/AmazonScraper.js");
 
 class Seller extends Model {
-	static associate() { }
 
+	/**
+	 * Finds seller in DB based on sellerID
+	 * @param {String} sellerID 
+	 * @returns {Seller} seller or FALSE if doesn't exist
+	 */
 	static async findSeller(sellerID) {
 		try {
 			const seller = await Seller.findOne({
@@ -22,6 +26,10 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * 
+	 * @returns {Array} sellers in DB if any
+	 */
 	static async getAllSellerIDs() {
 		try {
 			const sellers = await Seller.findAll({
@@ -38,6 +46,11 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * 
+	 * @param {String} sellerID 
+	 * @returns {Array} sellerASINS based on ID if exists in DB
+	 */
 	static async getASINSFromSellerID(sellerID) {
 		try {
 			const sellerASINS = await Seller.findOne({
@@ -56,6 +69,11 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * Creates a new Seller in DB by scraping all of the seller's ASIN's and using that information to populate data values in DB.
+	 * @param {String} sellerID 
+	 * @param {String} userID 
+	 */
 	static async createSeller(sellerID, userID) {
 		try {
 			const asins = await scraper.getSellerASINS(sellerID);
@@ -73,6 +91,12 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * Function that updates the usersTracking array in DB with @param userID
+	 * @param {String} sellerID 
+	 * @param {String} userID 
+	 * @returns 
+	 */
 	static async updateUsersTracking(sellerID, userID) {
 		try {
 			const seller = await Seller.findByPk(sellerID);
@@ -96,7 +120,12 @@ class Seller extends Model {
 		}
 	}
 
-	//update seller ASINS array by appending single ASIN (parameter)
+	/**
+	 * Updates the sellerASINS array for a seller, appending @param ASIN to array.
+	 * @param {String} sellerID 
+	 * @param {String} ASIN 
+	 * @returns 
+	 */
 	static async updateSellerASINS(sellerID, ASIN) {
 		try {
 			const seller = await Seller.findByPk(sellerID);
@@ -122,6 +151,11 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * Deletes ASIN from the sellerASINS array in DB. Uses @param sellerID to do lookup.
+	 * @param {String} sellerID 
+	 * @param {String} ASIN 
+	 */
 	static async deleteASIN(sellerID, ASIN) {
 		try {
 			// First, fetch the seller record from the database
@@ -143,6 +177,11 @@ class Seller extends Model {
 		}
 	}
 
+	/**
+	 * Removes seller row from DB if exists.
+	 * @param {String} sellerID 
+	 * @returns {Boolean}
+	 */
 	static async removeSeller(sellerID) {
 		try {
 			const seller = await this.findSeller(sellerID);
@@ -161,6 +200,7 @@ class Seller extends Model {
 	}
 }
 
+// Initalizes our Schema for the Seller model
 Seller.init(
 	{
 		sellerID: {
@@ -176,7 +216,6 @@ Seller.init(
 		},
 		usersTracking: {
 			type: DataTypes.ARRAY(DataTypes.STRING),
-			// allowNull: false,
 		},
 	},
 	{ sequelize: db, modelName: "Seller" }
