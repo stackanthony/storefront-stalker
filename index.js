@@ -100,6 +100,6 @@ client.login(token).then(async () => {
 
 const runMonitor = async () => {
 	while (true) {
-		await AmazonMonitor.run();
+		await AmazonMonitor.run(); // Runs monitor for new products on each seller's page.
 	}
 };
