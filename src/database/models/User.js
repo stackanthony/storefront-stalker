@@ -1,10 +1,16 @@
+// Import necessary modules and dependencies
 const db = require("../index.js");
 const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
 
+// Define the User model using Sequelize
 class User extends Model {
-	static associate() {}
-
+	/**
+	 * Find a user by their discordUserID.
+	 *
+	 * @param {string} discordUserID - The Discord user ID.
+	 * @returns {User|boolean} The user if found, otherwise false.
+	 */
 	static async findUser(discordUserID) {
 		try {
 			const user = await User.findOne({
@@ -20,6 +26,12 @@ class User extends Model {
 		}
 	}
 
+	/**
+	 * Create a new user.
+	 *
+	 * @param {string} discordUserID - The Discord user ID.
+	 * @returns {boolean} True if user creation is successful, otherwise false.
+	 */
 	static async createUser(discordUserID) {
 		try {
 			await User.create({ discordUserID: discordUserID });
@@ -32,6 +44,12 @@ class User extends Model {
 		}
 	}
 
+	/**
+	 * Remove a user.
+	 *
+	 * @param {string} discordUserID - The Discord user ID.
+	 * @returns {boolean} True if user removal is successful, otherwise false.
+	 */
 	static async removeUser(discordUserID) {
 		try {
 			const user = await this.findUser(discordUserID);
@@ -49,6 +67,13 @@ class User extends Model {
 		}
 	}
 
+	/**
+	 * Set a user's webhook.
+	 *
+	 * @param {string} discordUserID - The Discord user ID.
+	 * @param {string} discordWebhook - The webhook URL.
+	 * @returns {boolean} True if webhook setting is successful, otherwise false.
+	 */
 	static async setUserWebhook(discordUserID, discordWebhook) {
 		try {
 			const user = await this.findUser(discordUserID);
@@ -65,7 +90,13 @@ class User extends Model {
 			return false; // Return false in case of an error
 		}
 	}
-	// check if userWebhook exists and return true or false
+
+	/**
+	 * Check if a user's webhook exists.
+	 *
+	 * @param {string} discordUserID - The Discord user ID.
+	 * @returns {boolean} True if user's webhook exists, otherwise false.
+	 */
 	static async checkUserWebhook(discordUserID) {
 		try {
 			const user = await this.findUser(discordUserID);
@@ -83,6 +114,7 @@ class User extends Model {
 	}
 }
 
+// Initialize the User model
 User.init(
 	{
 		discordUserID: {
@@ -98,6 +130,9 @@ User.init(
 	},
 	{ paranoid: true, sequelize: db, modelName: "User" }
 );
+
+// Log success message indicating User model initialization
 signale.success("User Model Initialized");
 
+// Export the User model
 module.exports = User;

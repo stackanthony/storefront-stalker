@@ -3,6 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const signale = require("signale");
 const scraper = require("../../classes/AmazonScraper.js");
 
+// Define the Seller model using Sequelize
 class Seller extends Model {
 
 	/**
