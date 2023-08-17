@@ -47,10 +47,8 @@ module.exports = class AmazonScraper {
       signale.info("Product Count: ", resultsText);
 
       const sellerAsins = [];
-      // Depending on if there needs to be pagination or not, we will look for the totalResults, in different areas of the scraped page.
+      // Depending on if there needs to be pagination or not, we will look for the totalResults in different areas of the scraped page.
       const totalResults = resultsText.includes("-") ? parseInt(resultsText.split(" ")[2]) : resultsText.split(" ")[0];
-
-      signale.info("Total Results: ", totalResults);
 
       if (isNaN(totalResults) || totalResults <= 0) {
         signale.warn("No products found for the seller.");
@@ -67,30 +65,17 @@ module.exports = class AmazonScraper {
           .filter((asin) => asin && asin.trim() !== ""); // Exclude empty and whitespace-only ASINs
       };
 
-      sellerAsins.push(
-        ...$("div[data-asin]")
-          .map((i, ASIN) => $(ASIN).attr("data-asin"))
-          .get()
-          .filter((asin) => asin && asin.trim() !== "") // Exclude empty and whitespace-only ASINs
-      );
+      const totalPageCount = Math.ceil(totalResults / 16);
 
-      // Check if pagination is needed
-      if (totalResults > 16) {
-        // Contains more than 16 results, needs pagination
-        const totalPageCount = Math.ceil(totalResults / 16);
+      for (let page = 1; page <= totalPageCount; page++) {
+        signale.info("Scraping page: ", page);
+        const pageURL = `${queryURL}&page=${page}`;
+        const pageAsins = await getPageAsins(pageURL);
+        sellerAsins.push(...pageAsins);
 
-        for (let page = 2; page <= totalPageCount; page++) {
-          signale.info("Scraping page: ", page);
-          const pageURL = `${queryURL}&page=${page}`;
-          const pageAsins = await getPageAsins(pageURL);
-          sellerAsins.push(...pageAsins);
-
-          await timer(paginationDelay);
-        }
+        await timer(paginationDelay);
       }
-      // signale.success the scraped asins length and the num pages
-      // signale.success("Scraped ASINs Count: ", sellerAsins.length);
-      // signale.success("Scraped Page Count: ", Math.ceil(sellerAsins.length / 16) + 1);
+
       return sellerAsins;
     } catch (error) {
       signale.error("Error occurred while scraping:", error.message);
