@@ -1,3 +1,9 @@
+/**
+ * This class is used to handle proxy rotation logic. 
+ * We have two class variables that are used to keep track the index of the proxies array we're on, and the proxies array.
+ * Using this, we ensure that each request we send is via a different proxy. This allows us to circumvent bans from Amazon.com.
+ */
+
 const fs = require("fs");
 const signale = require("signale");
 
