@@ -1,6 +1,5 @@
 const signale = require("signale");
 const cheerio = require("cheerio");
-const axios = require("axios");
 const { HttpsProxyAgent } = require("https-proxy-agent");
 
 const ProxyManager = require("./ProxyManager");
@@ -13,6 +12,11 @@ const headers = {
   "Accept-Language": "en-US,en;q=0.5",
 };
 
+/**
+ * Makes a request to URL, and fetches the HTML of the page. Using ProxyManager in order to support rotating proxies, so we send each request from a different IP
+ * @param {String} url 
+ * @returns HTML of @param url
+ */
 const fetchHTML = async (url) => {
   const proxy = proxyManager.getNextProxy();
   const { host, port, username, password } = proxyManager.getProxyInformation(proxy);
@@ -34,6 +38,12 @@ const fetchHTML = async (url) => {
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 module.exports = class AmazonScraper {
+  /**
+   * Scrapes all ASIN's on a seller's store.
+   * @param {String} sellerID 
+   * @param {Number} paginationDelay 
+   * @returns {Array} sellerASINS
+   */
   static async getSellerASINS(sellerID, paginationDelay) {
     const queryURL = `http://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 
@@ -83,6 +93,11 @@ module.exports = class AmazonScraper {
     }
   }
 
+  /**
+   * Based on an ASIN, scrapes for various information on the ASIN's page.
+   * @param {String} ASIN 
+   * @returns {Object} Product Information
+   */
   static async getASINInformation(ASIN) {
     const queryURL = `http://www.amazon.com/dp/${ASIN}/`;
 
@@ -128,6 +143,11 @@ module.exports = class AmazonScraper {
     }
   }
 
+  /**
+   * Checks if the seller ID is a valid one on Amazon.
+   * @param {String} sellerID 
+   * @returns {Boolean} True/False dependent on seller existence.
+   */
   static async checkValidSellerID(sellerID) {
     const queryURL = `http://www.amazon.com/s?i=merchant-items&me=${sellerID}`;
 

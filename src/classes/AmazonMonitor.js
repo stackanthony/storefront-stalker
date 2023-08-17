@@ -5,8 +5,11 @@ const { WebhookClient, EmbedBuilder } = require("discord.js");
 const getRandomInterval = (min, max) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
-const randomTimer = () => {
-	const randomInterval = getRandomInterval(30000, 40000);
+/*
+* Sets a random timer between min, max.
+*/
+const randomTimer = (min, max) => {
+	const randomInterval = getRandomInterval(min, max);
 	return new Promise((res) => setTimeout(res, randomInterval));
 };
 
@@ -36,7 +39,7 @@ module.exports = class AmazonMonitor {
 
 				await this.processSeller(seller);
 				signale.await("Delaying next request...");
-				await randomTimer();
+				await randomTimer(30000,40000); // change these values based on amount of proxies. The more proxies you have, the less your delay can be. Tinker as you go.
 			}
 		} catch (error) {
 			signale.error("Monitor error: ", error);
@@ -44,9 +47,9 @@ module.exports = class AmazonMonitor {
 	}
 
 	/**
-	 * 
+	 * Checks all of the seller's ASINS through our scraping method. 
+	 * If new products are found, we send notifications through Discord embeds to each user that monitor the seller.  
 	 * @param {Seller} seller
-	 * Checks all of the seller's ASINS through our scraping method. If new products are found, we send notifications through Discord embeds to each user that monitor the seller.  
 	 */
 	static async processSeller(seller) {
 		try {
@@ -77,11 +80,10 @@ module.exports = class AmazonMonitor {
 	}
 
 	/**
-	 * 
+	 * Find ASIN product information and send embed through webhook to each user that is monitoring the seller
 	 * @param {String} ASIN 
 	 * @param {Seller} seller 
 	 * @param {Array} usersTrackingSeller 
-	 * Find ASIN product information and send embed through webhook to each user that is monitoring the seller
 	 */
 	static async processNewASIN(ASIN, seller, usersTrackingSeller) {
 		try {
