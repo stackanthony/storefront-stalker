@@ -3,12 +3,13 @@
 <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
 <br>amztools
 </h1>
-<h3>◦ Selling success with AMZtools!</h3>
+<h3>◦ Amazon StoreFront Stalker</h3>
 <h3>◦ Developed with the software and tools listed below.</h3>
 
 <p align="center">
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" />
-<img src="https://img.shields.io/badge/Axios-5A29E4.svg?style&logo=Axios&logoColor=white" alt="Axios" />
+<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt= "Postgres">
+<img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" alt="Discord.js">
 <img src="https://img.shields.io/badge/Sequelize-52B0E7.svg?style&logo=Sequelize&logoColor=white" alt="Sequelize" />
 <img src="https://img.shields.io/badge/Markdown-000000.svg?style&logo=Markdown&logoColor=white" alt="Markdown" />
 <img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
@@ -38,7 +39,7 @@
 
 ## 📍 Overview
 
-The project at https://github.com/copbrick/amztools comprises a collection of tools and commands for a Discord bot. Its primary purpose is to automate and streamline tasks related to monitoring Amazon sellers and sending notifications to users when new products are found. The project offers functionalities such as setting up webhooks, managing users and sellers, and scraping Amazon's website for ASIN and product information. This streamlines the process of tracking sellers and receiving timely notifications, which can be valuable for users interested in monitoring specific Amazon sellers and staying updated with new products.
+This project offers an innovative solution for tracking competitors' storefronts within Amazon's marketplace. By tailoring to users' preferences, notifications are seamlessly delivered via Discord whenever a seller introduces a new product on their storefront. Leveraging the power of a Discord bot, sellers can be effortlessly managed through an intuitive interface. This project optimizes the sourcing process, enabling you to swiftly identify high-potential products to enhance your own online store's profitability.
 
 ---
 
