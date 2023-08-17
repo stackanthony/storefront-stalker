@@ -44,9 +44,9 @@ module.exports = {
 					return interaction.editReply("You are already tracking this seller!");
 				}
 
-				await Seller.updateUsersTracking(sellerID, interaction.user.id);
+				await Seller.updateUsersTracking(sellerID, interaction.user.id); // update usersTracking array in Seller model DB
 			} else {
-				// Create the user if it doesn't exist
+				// Create the seller if it doesn't exist, and add user's ID to usersTracking array
 				await Seller.createSeller(sellerID, interaction.user.id);
 			}
 
