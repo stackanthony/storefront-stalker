@@ -18,7 +18,6 @@ try {
 	sequelize.query(
 		`CREATE SCHEMA IF NOT EXISTS "${process.env.DATABASE_SCHEMA}";`
 	);
-	// sequelize.options.schema = process.env.DATABASE_SCHEMA;
 	signale.success("Database Connected");
 	module.exports = sequelize;
 } catch (error) {
