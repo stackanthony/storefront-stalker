@@ -6,30 +6,12 @@
 <h3>◦ Developed with the software and tools listed below.</h3>
 
 <p align="center">
-<style>
-    .badge {
-        pointer-events: none; /* This disables click events on the badge */
-    }
-</style>
-
-<span class="badge">
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=logo&logo=JavaScript&logoColor=black" alt="JavaScript">
-</span>
-<span class="badge">
-    <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="Postgres">
-</span>
-<span class="badge">
-    <img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" alt="Discord.js">
-</span>
-<span class="badge">
-    <img src="https://img.shields.io/badge/Sequelize-52B0E7.svg?style=logo&logo=Sequelize&logoColor=white" alt="Sequelize">
-</span>
-<span class="badge">
-    <img src="https://img.shields.io/badge/Markdown-000000.svg?style=logo&logo=Markdown&logoColor=white" alt="Markdown">
-</span>
-<span class="badge">
-    <img src="https://img.shields.io/badge/JSON-000000.svg?style=logo&logo=JSON&logoColor=white" alt="JSON">
-</span>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" style="pointer-events: none;"/>
+<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt= "Postgres">
+<img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" alt="Discord.js">
+<img src="https://img.shields.io/badge/Sequelize-52B0E7.svg?style&logo=Sequelize&logoColor=white" alt="Sequelize" />
+<img src="https://img.shields.io/badge/Markdown-000000.svg?style&logo=Markdown&logoColor=white" alt="Markdown" />
+<img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
 </p>
 <img src="https://img.shields.io/github/languages/top/copbrick/amztools?style&color=5D6D7E" alt="GitHub top language" />
 <img src="https://img.shields.io/github/languages/code-size/copbrick/amztools?style&color=5D6D7E" alt="GitHub code size in bytes" />
