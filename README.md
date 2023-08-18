@@ -19,7 +19,7 @@
 <img src="https://img.shields.io/github/license/copbrick/amztools?style&color=5D6D7E" alt="GitHub license" />
 </div>
 <br>
-<img src="https://i.imgur.com/9bnBe9Y.png" />
+<img src="https://i.imgur.com/9bnBe9Y.png" align = "center"/>
 
 ---
 
