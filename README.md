@@ -3,7 +3,6 @@
 <img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" width="100" />
 <br>Amazon Storefront Stalker
 </h1>
-<img src="https://i.imgur.com/9bnBe9Y.png" />
 <h3>◦ Developed with the software and tools listed below.</h3>
 
 <p align="center">
@@ -19,6 +18,8 @@
 <img src="https://img.shields.io/github/commit-activity/m/copbrick/amztools?style&color=5D6D7E" alt="GitHub commit activity" />
 <img src="https://img.shields.io/github/license/copbrick/amztools?style&color=5D6D7E" alt="GitHub license" />
 </div>
+<br>
+<img src="https://i.imgur.com/9bnBe9Y.png" />
 
 ---
 
