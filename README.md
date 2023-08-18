@@ -1,6 +1,6 @@
 <div align="center">
 <h1 align="center">
-<img src="https://static.vecteezy.com/system/resources/previews/019/766/223/original/amazon-logo-amazon-icon-transparent-free-png.png" width="100" />
+<img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" width="100" />
 <br>Amazon StoreFront Stalker
 </h1>
 <h3>◦ Developed with the software and tools listed below.</h3>
