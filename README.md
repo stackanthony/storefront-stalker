@@ -210,14 +210,6 @@ npm test
 
 ---
 
-## 🗺 Roadmap
-
-> - [x] `ℹ️  Task 1: Implement X`
-> - [ ] `ℹ️  Task 2: Refactor Y`
-> - [ ] `ℹ️ ...`
-
----
-
 ## 🤝 Contributing
 
 Contributions are always welcome! Please follow these steps:
