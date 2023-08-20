@@ -172,9 +172,9 @@ repo
 
 Before you begin, ensure that you have the following prerequisites installed:
 
-> - `ℹ️ Requirement 1`
-> - `ℹ️ Requirement 2`
-> - `ℹ️ ...`
+> - `ℹ️ Node.js`
+> - `ℹ️ Postgres Database`
+> - `ℹ️ NPM`
 
 ### 📦 Installation
 
