@@ -5,6 +5,8 @@ const signale = require("signale");
 
 // Define the User model using Sequelize
 class User extends Model {
+	static associate() { }
+
 	/**
 	 * Find a user by their discordUserID.
 	 *

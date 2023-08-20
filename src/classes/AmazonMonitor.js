@@ -39,7 +39,7 @@ module.exports = class AmazonMonitor {
 
 				await this.processSeller(seller);
 				signale.await("Delaying next request...");
-				await randomTimer(30000,40000); // change these values based on amount of proxies. The more proxies you have, the less your delay can be. Tinker as you go.
+				await randomTimer(30000, 40000); // change these values based on amount of proxies. The more proxies you have, the less your delay can be. Tinker as you go.
 			}
 		} catch (error) {
 			signale.error("Monitor error: ", error);
@@ -101,9 +101,14 @@ module.exports = class AmazonMonitor {
 					url: user.discordWebhook,
 				});
 
-				webhookClient.send({
-					embeds: [embed],
-				});
+				try {
+					webhookClient.send({
+						embeds: [embed],
+					});
+				} catch (error) {
+					throw new Error("Webhook Doesn't Exist");
+				}
+
 
 				await Seller.updateSellerASINS(seller.sellerID, ASIN); // update seller ASINS in DB
 			}

@@ -5,7 +5,7 @@ const scraper = require("../../classes/AmazonScraper.js");
 
 // Define the Seller model using Sequelize
 class Seller extends Model {
-
+	static associate(){}
 	/**
 	 * Finds seller in DB based on sellerID
 	 * @param {String} sellerID 
