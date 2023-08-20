@@ -175,7 +175,7 @@ Before you begin, ensure that you have the following prerequisites installed:
 > - `ℹ️ Node.js`
 > - `ℹ️ Postgres Database`
 > - `ℹ️ NPM`
->  `ℹ️ Residential / Datacenter Proxies`
+> - `ℹ️ Residential / Datacenter Proxies`
 
 ### 📦 Installation
 
