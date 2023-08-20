@@ -3,10 +3,6 @@ const signale = require("signale");
 
 const { User } = require("../../database/models");
 
-signale.note(
-	"Temporary Add Command, need to add users a different way whether based on server / key, etc"
-);
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("adduser")
