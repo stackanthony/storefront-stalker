@@ -22,7 +22,8 @@ module.exports = class AmazonMonitor {
 			// check if there are any sellers to monitor
 			if (sellerIDs.length === 0) {
 				//NO SELLERS IN DB
-				return signale.info("No sellers to monitor.");
+				signale.info("No sellers to monitor.");
+				return await randomTimer(5000, 5500);
 			}
 			signale.await("Started monitoring for new Seller Products...");
 
