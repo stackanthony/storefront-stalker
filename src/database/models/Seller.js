@@ -5,22 +5,19 @@ const scraper = require("../../classes/AmazonScraper.js");
 
 // Define the Seller model using Sequelize
 class Seller extends Model {
-	static associate(){}
+	static associate() { }
 	/**
 	 * Finds seller in DB based on sellerID
 	 * @param {String} sellerID 
-	 * @returns {Seller} seller or FALSE if doesn't exist
+	 * @returns {Promise<Seller>} seller or FALSE if doesn't exist
 	 */
 	static async findSeller(sellerID) {
 		try {
 			const seller = await Seller.findOne({
-				where: { sellerID: sellerID },
+				where: { sellerID },
 			});
-			if (seller) {
-				return seller;
-			} else {
-				return false;
-			}
+
+			return seller;
 		} catch (error) {
 			signale.error("Error in findSeller: ", error);
 			throw error;
@@ -29,18 +26,15 @@ class Seller extends Model {
 
 	/**
 	 * 
-	 * @returns {Array} sellers in DB if any
+	 * @returns {Promise<Array>} sellers in DB if any
 	 */
 	static async getAllSellerIDs() {
 		try {
 			const sellers = await Seller.findAll({
 				attributes: ["sellerID"],
 			});
-			if (sellers) {
-				return sellers;
-			} else {
-				return false;
-			}
+
+			return sellers;
 		} catch (error) {
 			signale.error("Error in getAllSellers: ", error);
 			throw error;
@@ -50,7 +44,7 @@ class Seller extends Model {
 	/**
 	 * 
 	 * @param {String} sellerID 
-	 * @returns {Array} sellerASINS based on ID if exists in DB
+	 * @returns {Promise<Array>} sellerASINS based on ID if exists in DB
 	 */
 	static async getASINSFromSellerID(sellerID) {
 		try {
@@ -59,13 +53,8 @@ class Seller extends Model {
 				where: { sellerID: sellerID },
 			});
 
-			if (sellerASINS) {
-				return sellerASINS.dataValues.sellerASINS;
-			} else {
-				return false;
-			}
+			return sellerASINS.dataValues.sellerASINS;
 		} catch (error) {
-			signale.error("Error in getASINSFromSellerID: ", error);
 			throw error;
 		}
 	}
@@ -96,7 +85,7 @@ class Seller extends Model {
 	 * Function that updates the usersTracking array in DB with @param userID
 	 * @param {String} sellerID 
 	 * @param {String} userID 
-	 * @returns 
+	 * @returns {Promise<Boolean>}
 	 */
 	static async updateUsersTracking(sellerID, userID) {
 		try {
@@ -125,7 +114,7 @@ class Seller extends Model {
 	 * Updates the sellerASINS array for a seller, appending @param ASIN to array.
 	 * @param {String} sellerID 
 	 * @param {String} ASIN 
-	 * @returns 
+	 * @returns {Promise<Boolean>}
 	 */
 	static async updateSellerASINS(sellerID, ASIN) {
 		try {
@@ -181,7 +170,7 @@ class Seller extends Model {
 	/**
 	 * Removes seller row from DB if exists.
 	 * @param {String} sellerID 
-	 * @returns {Boolean}
+	 * @returns {Promise<void>}
 	 */
 	static async removeSeller(sellerID) {
 		try {
@@ -189,10 +178,8 @@ class Seller extends Model {
 			if (seller) {
 				signale.complete("Seller Removed: ", seller.sellerID);
 				await seller.destroy();
-				return true;
 			} else {
 				signale.warn("Seller Not Found, No Action Taken.");
-				return false;
 			}
 		} catch (error) {
 			signale.error("Seller Remove Error: ", error);

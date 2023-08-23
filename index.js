@@ -8,6 +8,9 @@ signale.config({
 	displayDate: true,
 });
 
+const { User, Seller } = require("./src/database/models");
+
+
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
@@ -99,7 +102,7 @@ client.login(token).then(async () => {
 });
 
 const runMonitor = async () => {
-	// while (true) {
-	// 	await AmazonMonitor.run(); // Runs monitor for new products on each seller's page.
-	// }
+	while (true) {
+		await AmazonMonitor.run(); // Runs monitor for new products on each seller's page.
+	}
 };

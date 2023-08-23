@@ -11,20 +11,17 @@ class User extends Model {
 	 * Find a user by their discordUserID.
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
-	 * @returns {User|boolean} The user if found, otherwise false.
+	 * @returns {Promise<User>} The user if found, otherwise false.
 	 */
 	static async findUser(discordUserID) {
 		try {
 			const user = await User.findOne({
-				where: { discordUserID: discordUserID },
+				where: { discordUserID },
 			});
-			if (user) {
-				return user; // Return user object if user is found, false otherwise
-			} else {
-				return false;
-			}
+			return user;
 		} catch (error) {
 			signale.error("Error in findUser: ", error);
+			throw error;
 		}
 	}
 
@@ -32,17 +29,16 @@ class User extends Model {
 	 * Create a new user.
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
-	 * @returns {boolean} True if user creation is successful, otherwise false.
+	 * @returns {Promise<void>} 
 	 */
 	static async createUser(discordUserID) {
 		try {
-			await User.create({ discordUserID: discordUserID });
+			await User.create({ discordUserID });
 
 			signale.success("User Created: ", discordUserID);
-			return true; // Return true to indicate success
 		} catch (error) {
 			signale.error("User DB Creation Error: ", error);
-			return false; // Return false in case of an error
+			throw error;
 		}
 	}
 
@@ -50,7 +46,7 @@ class User extends Model {
 	 * Remove a user.
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
-	 * @returns {boolean} True if user removal is successful, otherwise false.
+	 * @returns {Promise<Boolean>} True if user removal is successful, otherwise false.
 	 */
 	static async removeUser(discordUserID) {
 		try {
@@ -65,7 +61,7 @@ class User extends Model {
 			}
 		} catch (error) {
 			signale.error("User Remove Error: ", error);
-			return false; // Return false in case of an error
+			throw error;
 		}
 	}
 
@@ -74,7 +70,7 @@ class User extends Model {
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
 	 * @param {string} discordWebhook - The webhook URL.
-	 * @returns {boolean} True if webhook setting is successful, otherwise false.
+	 * @returns {Promise<Boolean>} True if webhook setting is successful, otherwise false.
 	 */
 	static async setUserWebhook(discordUserID, discordWebhook) {
 		try {
@@ -89,7 +85,7 @@ class User extends Model {
 			}
 		} catch (error) {
 			signale.error("Couldn't Set User Webhook: ", error);
-			return false; // Return false in case of an error
+			throw error;
 		}
 	}
 
@@ -97,21 +93,16 @@ class User extends Model {
 	 * Check if a user's webhook exists.
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
-	 * @returns {boolean} True if user's webhook exists, otherwise false.
+	 * @returns {Promise<Boolean>} True if user's webhook exists, otherwise false.
 	 */
 	static async checkUserWebhook(discordUserID) {
 		try {
 			const user = await this.findUser(discordUserID);
-			if (user) {
-				if (user.discordWebhook) {
-					return true;
-				}
-			} else {
-				return false;
-			}
+
+			return user.discordWebhook;
 		} catch (error) {
 			signale.error("Couldn't Check User Webhook: ", error);
-			return false;
+			throw error;
 		}
 	}
 }
