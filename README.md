@@ -237,6 +237,8 @@ LOGGING=false #make "true" if you'd like to see DB logs
 npm start
 ```
 
+### 🤖 Using Commands
+
 ---
 
 ## 🤝 Contributing

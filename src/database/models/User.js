@@ -19,7 +19,7 @@ class User extends Model {
 				where: { discordUserID: discordUserID },
 			});
 			if (user) {
-				return user; // Return true if user is found, false otherwise
+				return user; // Return user object if user is found, false otherwise
 			} else {
 				return false;
 			}

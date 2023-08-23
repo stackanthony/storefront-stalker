@@ -32,17 +32,26 @@ module.exports = {
 			}
 
 			// Set the user's webhook and handle the result
-			const webhookSet = await User.setUserWebhook(
-				discordUserID,
-				discordWebhook
-			);
+			const user = await User.findUser(discordUserID);
 
-			if (webhookSet) {
-				return interaction.reply("Webhook set successfully.");
-			} else {
-				// user not found
-				return interaction.reply("Failed to set webhook. Please check logs.");
+			// if the user doesn't exist, create user in DB and set webhook
+			if (!user) {
+				await User.createUser(discordUserID);
+				await User.setUserWebhook(discordUserID, discordWebhook);
 			}
+
+			return interaction.reply("Webhook set successfully.");
+			// const webhookSet = await User.setUserWebhook(
+			// 	discordUserID,
+			// 	discordWebhook
+			// );
+
+			// if (webhookSet) {
+			// 	return interaction.reply("Webhook set successfully.");
+			// } else {
+			// 	// user not found
+			// 	return interaction.reply("Failed to set webhook. Please check logs.");
+			// }
 		} catch (error) {
 			signale.error("setWebhook Command Error: ", error);
 			return interaction.reply(
