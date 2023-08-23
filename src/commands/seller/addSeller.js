@@ -4,10 +4,6 @@ const signale = require("signale");
 const { Seller, User } = require("../../database/models");
 const AmazonScraper = require("../../classes/AmazonScraper");
 
-signale.note(
-	"Change command to query if user is monitoring seller. Currently, checks the whole seller table."
-);
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("addseller")
