@@ -244,9 +244,13 @@ npm start
 
   ![Discord Set Webhook Command](https://i.imgur.com/MTN1IqO.png)
 
-- **Test Webook** `/testwebhook`
+- **Test Webhook** `/testwebhook`
 
   ![Discord Test Webhook Command](https://i.imgur.com/kty55um.png)
+
+- **Reset Webhook** `/resetwebhook`
+
+  ![Discord Reset Webhook Command](https://i.imgur.com/VrTt8XO.png)
 
 ---
 
