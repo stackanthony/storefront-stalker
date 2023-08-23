@@ -93,7 +93,7 @@ class User extends Model {
 	 * Check if a user's webhook exists.
 	 *
 	 * @param {string} discordUserID - The Discord user ID.
-	 * @returns {Promise<Boolean>} True if user's webhook exists, otherwise false.
+	 * @returns {Promise<String>}
 	 */
 	static async checkUserWebhook(discordUserID) {
 		try {
