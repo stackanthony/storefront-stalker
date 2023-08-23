@@ -8,9 +8,6 @@ signale.config({
 	displayDate: true,
 });
 
-const { User, Seller } = require("./src/database/models");
-
-
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
