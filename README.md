@@ -35,7 +35,6 @@
 - [🚀 Getting Started](#-getting-started)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
-- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 
@@ -233,6 +232,7 @@ LOGGING=false #make "true" if you'd like to see DB logs
 ```
 
 4. Once you've created all of these files, run the bot using the command:
+
 ```sh
 npm start
 ```
@@ -272,11 +272,5 @@ git push origin new-feature-branch
 ## 📄 License
 
 This project is licensed under the `ℹ️  MIT` License.
-
----
-
-## 👏 Acknowledgments
-
-> - `ℹ️  List any resources, contributors, inspiration, etc.`
 
 ---
