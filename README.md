@@ -234,6 +234,7 @@ LOGGING=false #make "true" if you'd like to see DB logs
 4. Once you've created all of these files, run the bot using the command:
 
 ```sh
+node deploy-commands.js # enables discord bot to recognize our commands. Only needs to be ran first time you set up the enviroment, or if you add your own commands to the bot.
 npm start
 ```
 
