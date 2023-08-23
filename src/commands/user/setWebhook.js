@@ -37,8 +37,8 @@ module.exports = {
 			// if the user doesn't exist, create user in DB and set webhook
 			if (!user) {
 				await User.createUser(discordUserID);
-				await User.setUserWebhook(discordUserID, discordWebhook);
 			}
+			await User.setUserWebhook(discordUserID, discordWebhook);
 
 			return interaction.reply("Webhook set successfully.");
 		} catch (error) {

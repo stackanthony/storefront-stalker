@@ -252,6 +252,14 @@ npm start
 
   ![Discord Reset Webhook Command](https://i.imgur.com/VrTt8XO.png)
 
+- **Add Seller** `/addseller`
+
+  ![Add Seller to Monitor Command](https://i.imgur.com/9dz0wuN.png)
+
+- **Remove Seller** `/removeseller`
+
+  ![Remove Seller to Monitor Command]()
+
 ---
 
 ## 🤝 Contributing
