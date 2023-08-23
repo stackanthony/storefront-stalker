@@ -240,7 +240,7 @@ npm start
 
 ### 🤖 Using Commands
 
-- Set Discord Webhook:
+- **Set Discord Webhook** `/setWebhook`:
   ![Discord Set Webhook Command](https://i.imgur.com/MTN1IqO.png)
 
 ---
