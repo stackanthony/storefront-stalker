@@ -199,7 +199,7 @@ npm install
 
 ### 🎮 Using amztools
 
-- Ensure you're in the root directory when completing the following steps.
+- **Ensure you're in the root directory when completing the following steps.**
 
 1. Create a .env file with the following:
 
@@ -211,6 +211,26 @@ DATABASE_USERNAME=<DATABASE_USERNAME>
 DATABASE_PASSWORD=<DATABASE_PASSWORD>
 DATABASE_SCHEMA=stalker
 LOGGING=false #make "true" if you'd like to see DB logs
+```
+
+2. Create a config.json file with the following
+
+```json
+{
+  "token": "<DISCORD_BOT_TOKEN>",
+  "clientId": "<DISCORD_BOT_CLIENT_ID>",
+  "guildId": "<DISCORD_SERVER_ID>"
+}
+```
+
+3. Create a proxies.txt file with your proxies, seperated by a new line.
+
+```txt
+191.x.x.x:1111:username:password
+192.x.x.x:1111:username:password
+.
+.
+.
 ```
 
 ```sh
