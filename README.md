@@ -16,7 +16,7 @@
 <img src="https://img.shields.io/github/languages/top/copbrick/amztools?style&color=5D6D7E" alt="GitHub top language" />
 <img src="https://img.shields.io/github/languages/code-size/copbrick/amztools?style&color=5D6D7E" alt="GitHub code size in bytes" />
 <img src="https://img.shields.io/github/commit-activity/m/copbrick/amztools?style&color=5D6D7E" alt="GitHub commit activity" />
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license" />
 <br>
 <br>
 <img src="https://i.imgur.com/9bnBe9Y.png" />
