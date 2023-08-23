@@ -199,14 +199,22 @@ npm install
 
 ### 🎮 Using amztools
 
-```sh
-node app.js
+- Ensure you're in the root directory when completing the following steps.
+
+1. Create a .env file with the following keys:
+
+```env
+DATABASE_NAME=<DATABASE_NAME>
+DATABASE_HOST=<DATABASE_HOST>
+DATABASE_PORT=<DATABASE_PORT>
+DATABASE_USERNAME=<DATABASE_USERNAME>
+DATABASE_PASSWORD=<DATABASE_PASSWORD>
+DATABASE_SCHEMA=stalker
+LOGGING=false //make "true" if you'd like to see DB logs
 ```
 
-### 🧪 Running Tests
-
 ```sh
-npm test
+node app.js
 ```
 
 ---
