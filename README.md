@@ -258,7 +258,7 @@ npm start
 
 - **Remove Seller** `/removeseller`
 
-  ![Remove Seller to Monitor Command](https://i.imgur.com/SDJD6fu.png)
+  ![Remove Seller to Monitor Command](https://i.imgur.com/p2YRZ38.png)
 
 ---
 
