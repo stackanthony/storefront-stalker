@@ -201,7 +201,7 @@ npm install
 
 - Ensure you're in the root directory when completing the following steps.
 
-1. Create a .env file with the following keys:
+1. Create a .env file with the following:
 
 ```env
 DATABASE_NAME=<DATABASE_NAME>
@@ -210,7 +210,7 @@ DATABASE_PORT=<DATABASE_PORT>
 DATABASE_USERNAME=<DATABASE_USERNAME>
 DATABASE_PASSWORD=<DATABASE_PASSWORD>
 DATABASE_SCHEMA=stalker
-LOGGING=false //make "true" if you'd like to see DB logs
+LOGGING=false #make "true" if you'd like to see DB logs
 ```
 
 ```sh
