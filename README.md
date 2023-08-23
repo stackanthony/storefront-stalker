@@ -271,6 +271,6 @@ git push origin new-feature-branch
 
 ## 📄 License
 
-This project is licensed under the `ℹ️  MIT` License.
+This project is licensed under the `MIT` License.
 
 ---
