@@ -41,17 +41,6 @@ module.exports = {
 			}
 
 			return interaction.reply("Webhook set successfully.");
-			// const webhookSet = await User.setUserWebhook(
-			// 	discordUserID,
-			// 	discordWebhook
-			// );
-
-			// if (webhookSet) {
-			// 	return interaction.reply("Webhook set successfully.");
-			// } else {
-			// 	// user not found
-			// 	return interaction.reply("Failed to set webhook. Please check logs.");
-			// }
 		} catch (error) {
 			signale.error("setWebhook Command Error: ", error);
 			return interaction.reply(
