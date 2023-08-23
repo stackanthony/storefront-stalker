@@ -233,8 +233,9 @@ LOGGING=false #make "true" if you'd like to see DB logs
 .
 ```
 
+4. Once you've created all of these files, run the bot using the command:
 ```sh
-node app.js
+npm start
 ```
 
 ---
