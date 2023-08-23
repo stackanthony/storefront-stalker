@@ -195,7 +195,7 @@ cd amztools
 npm install
 ```
 
-### 🎮 Using amztools
+### 🌍🌡️ Enviroment Setup
 
 - **Ensure you're in the root directory when completing the following steps.**
 
