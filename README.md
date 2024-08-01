@@ -180,13 +180,13 @@ Before you begin, ensure that you have the following prerequisites installed:
 1. Clone the amztools repository:
 
 ```sh
-git clone https://github.com/copbrick/amztools
+git clone https://github.com/stackanthony/storefront-stalker
 ```
 
 2. Change to the project directory:
 
 ```sh
-cd amztools
+cd storefront-stalker
 ```
 
 3. Install the dependencies:
