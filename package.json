@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/copbrick/amztools.git"
+    "url": "git+https://github.com/stackanthony/amztools.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/copbrick/amztools/issues"
+    "url": "https://github.com/stackanthony/amztools/issues"
   },
-  "homepage": "https://github.com/copbrick/amztools#readme",
+  "homepage": "https://github.com/stackanthony/amztools#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
